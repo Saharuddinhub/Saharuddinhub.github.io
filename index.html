@@ -1,139 +1,161 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Sekolah Kita</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMK Islam Malahayati</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
       margin: 0;
-      background: #f5f7fa;
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f6fa;
+      color: #2f3640;
     }
     header {
-      background: linear-gradient(90deg, #007bff, #00c3ff);
+      background: linear-gradient(135deg, #0066cc, #00a8ff);
       color: white;
+      padding: 20px 0;
       text-align: center;
-      padding: 30px 0;
       box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
     nav {
-      background: #005f99;
       display: flex;
       justify-content: center;
-      padding: 10px;
+      background-color: #273c75;
     }
     nav a {
       color: white;
+      padding: 14px 20px;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-      transition: 0.3s;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background 0.3s;
     }
     nav a:hover {
-      color: #ffeb3b;
-    }
-    section {
-      padding: 40px;
-      max-width: 1000px;
-      margin: auto;
+      background-color: #40739e;
     }
     .hero {
-      text-align: center;
-      background: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf') no-repeat center/cover;
+      background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1050&q=80');
+      background-size: cover;
+      background-position: center;
       color: white;
+      text-align: center;
       padding: 100px 20px;
-      border-radius: 10px;
     }
-    .hero h1 {
-      background: rgba(0,0,0,0.5);
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 10px;
+    .hero h2 {
+      font-size: 2.5em;
+      margin: 0;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
     }
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    .hero p {
+      font-size: 1.2em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    }
+    .container {
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .about, .programs, .contact {
+      margin-bottom: 50px;
+    }
+    .about h2, .programs h2, .contact h2 {
+      color: #273c75;
+      border-left: 5px solid #00a8ff;
+      padding-left: 10px;
+    }
+    .programs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
-    .card {
-      background: white;
+    .program {
+      background-color: white;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      width: 300px;
-      padding: 20px;
       text-align: center;
       transition: transform 0.3s;
     }
-    .card:hover {
-      transform: scale(1.05);
+    .program:hover {
+      transform: translateY(-5px);
+    }
+    .program img {
+      width: 100%;
+      border-radius: 10px;
     }
     footer {
-      background: #005f99;
+      background-color: #273c75;
       color: white;
       text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+      padding: 20px 10px;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>🌟 SMP Negeri 1 Harapan Bangsa 🌟</h1>
-    <p>"Cerdas, Disiplin, dan Berprestasi"</p>
+    <h1>SMK ISLAM MALAHAYATI</h1>
+    <p>Membangun Generasi Unggul, Berakhlak, dan Berprestasi</p>
   </header>
 
   <nav>
-    <a href="#beranda">Beranda</a>
-    <a href="#profil">Profil</a>
-    <a href="#guru">Guru</a>
-    <a href="#kontak">Kontak</a>
+    <a href="#home">Beranda</a>
+    <a href="#about">Profil</a>
+    <a href="#programs">Jurusan</a>
+    <a href="#contact">Kontak</a>
   </nav>
 
-  <section id="beranda">
-    <div class="hero">
-      <h1>Selamat Datang di Website Sekolah Kami</h1>
-      <p>Menginspirasi dan mencetak generasi masa depan yang gemilang!</p>
-    </div>
+  <section class="hero" id="home">
+    <h2>Selamat Datang di Website Resmi SMK Islam Malahayati</h2>
+    <p>Mewujudkan Sekolah Kejuruan Islami yang Kreatif dan Kompeten</p>
   </section>
 
-  <section id="profil">
-    <h2>🏫 Profil Sekolah</h2>
-    <p>SMP Negeri 1 Harapan Bangsa berdiri sejak tahun 1998 dengan visi “Mewujudkan peserta didik yang beriman, berilmu, dan berkarakter.” 
-    Sekolah ini memiliki berbagai fasilitas modern seperti laboratorium komputer, perpustakaan digital, serta ruang kelas yang nyaman dan ber-AC.</p>
-  </section>
+  <div class="container">
+    <section class="about" id="about">
+      <h2>Profil Sekolah</h2>
+      <p>
+        SMK Islam Malahayati adalah lembaga pendidikan kejuruan yang berfokus pada pembentukan karakter islami, keterampilan profesional, dan kecerdasan teknologi.
+        Sekolah ini berkomitmen untuk mencetak lulusan yang beriman, cerdas, dan siap kerja di dunia industri maupun wirausaha.
+      </p>
+    </section>
 
-  <section id="guru">
-    <h2>👩‍🏫 Guru & Staf</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>Pak Budi Santoso</h3>
-        <p>Guru Matematika</p>
+    <section class="programs" id="programs">
+      <h2>Program Keahlian</h2>
+      <div class="program">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Teknik Komputer">
+        <h3>Teknik Komputer & Jaringan</h3>
+        <p>Mempelajari jaringan komputer, instalasi, dan administrasi sistem untuk dunia kerja digital modern.</p>
       </div>
-      <div class="card">
-        <h3>Bu Rina Kartika</h3>
-        <p>Guru Bahasa Indonesia</p>
+      <div class="program">
+        <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=800&q=80" alt="Multimedia">
+        <h3>Multimedia</h3>
+        <p>Mengembangkan kreativitas dalam desain grafis, animasi, dan produksi konten digital berkualitas.</p>
       </div>
-      <div class="card">
-        <h3>Pak Andi Wijaya</h3>
-        <p>Guru IPA</p>
+      <div class="program">
+        <img src="https://images.unsplash.com/photo-1581090468060-7e0cdfbb6794?auto=format&fit=crop&w=800&q=80" alt="Akuntansi">
+        <h3>Akuntansi & Keuangan</h3>
+        <p>Mempersiapkan siswa menjadi tenaga profesional di bidang keuangan dan manajemen bisnis.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="kontak">
-    <h2>📞 Kontak Kami</h2>
-    <p>Email: <a href="mailto:info@smp1harapan.sch.id">info@smp1harapan.sch.id</a></p>
-    <p>Alamat: Jl. Pendidikan No.10, Jakarta</p>
-    <p>Telepon: (021) 12345678</p>
-  </section>
+    <section class="contact" id="contact">
+      <h2>Kontak Kami</h2>
+      <p>
+        📍 Alamat: Jl. Pendidikan No. 45, Jakarta Timur<br>
+        📞 Telepon: (021) 5678-9012<br>
+        ✉️ Email: info@smkmalahayati.sch.id
+      </p>
+    </section>
+  </div>
 
   <footer>
-    <p>&copy; 2025 SMP Negeri 1 Harapan Bangsa | Dibuat dengan ❤️ oleh Siswa Kreatif</p>
+    <p>© 2025 SMK Islam Malahayati | Dibuat dengan 💙 untuk pendidikan</p>
   </footer>
-
 </body>
-</html>
+          </html>
