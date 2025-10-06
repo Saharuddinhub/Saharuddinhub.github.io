@@ -1,86 +1,139 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Website Sekolah</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Sekolah Kita</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
+      background: #f5f7fa;
+      color: #333;
     }
     header {
-      background-color: #333;
+      background: linear-gradient(90deg, #007bff, #00c3ff);
       color: white;
-      padding: 20px;
       text-align: center;
+      padding: 30px 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
     nav {
-      background-color: #555;
-      padding: 10px;
-    }
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+      background: #005f99;
       display: flex;
       justify-content: center;
+      padding: 10px;
     }
-    nav ul li {
-      margin-right: 15px;
-    }
-    nav ul li a {
+    nav a {
       color: white;
       text-decoration: none;
+      margin: 0 15px;
       font-weight: bold;
+      transition: 0.3s;
     }
-    main {
+    nav a:hover {
+      color: #ffeb3b;
+    }
+    section {
+      padding: 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .hero {
+      text-align: center;
+      background: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf') no-repeat center/cover;
+      color: white;
+      padding: 100px 20px;
+      border-radius: 10px;
+    }
+    .hero h1 {
+      background: rgba(0,0,0,0.5);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      width: 300px;
       padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
     }
     footer {
-      background-color: #333;
+      background: #005f99;
       color: white;
       text-align: center;
-      padding: 10px;
-      position: relative;
-      bottom: 0;
-      width: 100%;
+      padding: 20px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Sekolah SMAN</h1>
+    <h1>🌟 SMP Negeri 1 Harapan Bangsa 🌟</h1>
+    <p>"Cerdas, Disiplin, dan Berprestasi"</p>
   </header>
+
   <nav>
-    <ul>
-      <li><a href="#beranda">Beranda</a></li>
-      <li><a href="#tentang">Tentang</a></li>
-      <li><a href="#program">Program Studi</a></li>
-      <li><a href="#kontak">Kontak</a></li>
-    </ul>
+    <a href="#beranda">Beranda</a>
+    <a href="#profil">Profil</a>
+    <a href="#guru">Guru</a>
+    <a href="#kontak">Kontak</a>
   </nav>
-  <main>
-    <section id="beranda">
-      <h2>Selamat datang di Sekolah SMAN!</h2>
-      <p>Website kami menyediakan informasi tentang program studi dan kegiatan di Sekolah SMAN.</p>
-    </section>
-    <section id="tentang">
-      <h2>Tentang Sekolah</h2>
-      <p>Info mengenai sejarah dan visi misi sekolah.</p>
-    </section>
-    <section id="program">
-      <h2>Program Studi</h2>
-      <p>Detail program-program pendidikan yang ditawarkan.</p>
-    </section>
-    <section id="kontak">
-      <h2>Kontak</h2>
-      <p>Hubungi kami di email: info@sekolsman.sch.id</p>
-    </section>
-  </main>
+
+  <section id="beranda">
+    <div class="hero">
+      <h1>Selamat Datang di Website Sekolah Kami</h1>
+      <p>Menginspirasi dan mencetak generasi masa depan yang gemilang!</p>
+    </div>
+  </section>
+
+  <section id="profil">
+    <h2>🏫 Profil Sekolah</h2>
+    <p>SMP Negeri 1 Harapan Bangsa berdiri sejak tahun 1998 dengan visi “Mewujudkan peserta didik yang beriman, berilmu, dan berkarakter.” 
+    Sekolah ini memiliki berbagai fasilitas modern seperti laboratorium komputer, perpustakaan digital, serta ruang kelas yang nyaman dan ber-AC.</p>
+  </section>
+
+  <section id="guru">
+    <h2>👩‍🏫 Guru & Staf</h2>
+    <div class="card-container">
+      <div class="card">
+        <h3>Pak Budi Santoso</h3>
+        <p>Guru Matematika</p>
+      </div>
+      <div class="card">
+        <h3>Bu Rina Kartika</h3>
+        <p>Guru Bahasa Indonesia</p>
+      </div>
+      <div class="card">
+        <h3>Pak Andi Wijaya</h3>
+        <p>Guru IPA</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontak">
+    <h2>📞 Kontak Kami</h2>
+    <p>Email: <a href="mailto:info@smp1harapan.sch.id">info@smp1harapan.sch.id</a></p>
+    <p>Alamat: Jl. Pendidikan No.10, Jakarta</p>
+    <p>Telepon: (021) 12345678</p>
+  </section>
+
   <footer>
-    <p>Hak Cipta © 2025 Sekolah SMAN. All rights reserved.</p>
+    <p>&copy; 2025 SMP Negeri 1 Harapan Bangsa | Dibuat dengan ❤️ oleh Siswa Kreatif</p>
   </footer>
+
 </body>
-</html>Penjelasan:
+</html>
