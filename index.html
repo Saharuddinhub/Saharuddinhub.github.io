@@ -1,224 +1,250 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Website Sekolah SMK Islam Malahayati</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMP Negeri 217</title>
   <style>
-    /* ==== GAYA DASAR ==== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
+    /* 🌈 Gaya Umum */
     body {
-      background-color: #f9fafb;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f0f6ff;
       color: #333;
     }
 
-    /* ==== HEADER ==== */
     header {
-      background: linear-gradient(90deg, #007bff, #00bcd4);
+      background: linear-gradient(135deg, #007bff, #00bfff);
       color: white;
-      padding: 20px 50px;
+      padding: 25px 0;
       text-align: center;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    }
-    header h1 {
-      font-size: 2.2em;
-      margin-bottom: 5px;
-    }
-    header p {
-      font-size: 1.1em;
-      opacity: 0.9;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* ==== NAVBAR ==== */
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 5px;
+      font-size: 1.1em;
+      font-style: italic;
+    }
+
     nav {
       display: flex;
       justify-content: center;
-      background: #004a99;
-      padding: 10px 0;
+      background: #0056b3;
+      flex-wrap: wrap;
     }
+
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #ffcc00;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s;
     }
 
-    /* ==== HERO ==== */
+    nav a:hover {
+      background: #007bff;
+    }
+
     .hero {
-      background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      background: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=60') no-repeat center/cover;
       color: white;
       text-align: center;
-      position: relative;
+      padding: 120px 20px;
     }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1;
-    }
-    .hero h2, .hero p {
-      position: relative;
-      z-index: 2;
-    }
+
     .hero h2 {
-      font-size: 2.5em;
+      font-size: 2.8em;
       margin-bottom: 10px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     }
 
-    /* ==== KONTEN ==== */
-    .container {
-      width: 85%;
-      max-width: 1200px;
-      margin: 50px auto;
+    .hero p {
+      font-size: 1.3em;
+      max-width: 700px;
+      margin: 0 auto;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
     }
-    .section-title {
+
+    section {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
       text-align: center;
-      margin-bottom: 30px;
-      color: #007bff;
-      font-size: 1.8em;
-      position: relative;
-    }
-    .section-title::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 3px;
-      background: #00bcd4;
-      margin: 10px auto 0;
-      border-radius: 5px;
+      color: #0056b3;
+      margin-bottom: 20px;
+      font-size: 2em;
     }
 
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
-      justify-content: center;
     }
+
     .card {
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      width: 300px;
-      padding: 20px;
-      text-align: center;
-      transition: 0.3s;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
     }
+
     .card:hover {
       transform: translateY(-5px);
     }
+
     .card img {
       width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      height: 160px;
+      object-fit: cover;
     }
 
-    /* ==== FOOTER ==== */
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      margin-top: 0;
+      color: #004080;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      background: #e8f1ff;
+      margin: 8px 0;
+      padding: 12px 15px;
+      border-radius: 10px;
+    }
+
     footer {
-      background: #004a99;
+      background: #004080;
       color: white;
       text-align: center;
       padding: 20px 0;
       margin-top: 50px;
     }
+
     footer p {
-      font-size: 0.9em;
+      margin: 0;
     }
 
-    /* ==== RESPONSIVE ==== */
-    @media (max-width: 768px) {
-      .cards {
-        flex-direction: column;
-        align-items: center;
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 2em;
       }
-      header h1 {
-        font-size: 1.8em;
+      nav a {
+        padding: 10px 15px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
-    <h1>SMK ISLAM MALAHAYATI</h1>
-    <p>Membentuk Generasi Islami, Kreatif, dan Berprestasi</p>
+    <h1>SMP NEGERI 217</h1>
+    <p>Mengasah Prestasi, Menanamkan Karakter, dan Membangun Masa Depan</p>
   </header>
 
-  <!-- NAVBAR -->
   <nav>
-    <a href="#beranda">Beranda</a>
     <a href="#profil">Profil</a>
-    <a href="#program">Program Keahlian</a>
+    <a href="#kegiatan">Kegiatan</a>
+    <a href="#guru">Guru</a>
+    <a href="#prestasi">Prestasi</a>
     <a href="#kontak">Kontak</a>
   </nav>
 
-  <!-- HERO SECTION -->
-  <section class="hero" id="beranda">
-    <h2>Selamat Datang di SMK Islam Malahayati</h2>
-    <p>Tempat belajar, berkreasi, dan mengembangkan potensi terbaikmu.</p>
+  <div class="hero">
+    <h2>Selamat Datang di SMP Negeri 217</h2>
+    <p>Tempat belajar yang nyaman, kreatif, dan berkarakter unggul menuju generasi emas Indonesia.</p>
+  </div>
+
+  <section id="profil">
+    <h2>Profil Sekolah</h2>
+    <p>SMP Negeri 217 berdiri sejak tahun 2000 dengan visi menjadi sekolah unggul dalam prestasi dan karakter.
+       Kami berkomitmen memberikan pendidikan terbaik yang berlandaskan nilai-nilai kejujuran, disiplin, dan tanggung jawab.</p>
   </section>
 
-  <!-- PROFIL SEKOLAH -->
-  <section id="profil" class="container">
-    <h2 class="section-title">Profil Sekolah</h2>
-    <p style="text-align:center; max-width:800px; margin:auto;">
-      SMK Islam Malahayati berdiri dengan tujuan mencetak generasi muda yang beriman, berilmu, dan siap menghadapi dunia kerja. 
-      Dengan fasilitas lengkap dan tenaga pengajar profesional, kami berkomitmen memberikan pendidikan terbaik bagi siswa-siswi kami.
-    </p>
-  </section>
-
-  <!-- PROGRAM KEAHLIAN -->
-  <section id="program" class="container">
-    <h2 class="section-title">Program Keahlian</h2>
-    <div class="cards">
+  <section id="kegiatan">
+    <h2>Kegiatan Sekolah</h2>
+    <div class="card-container">
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1581092334426-6e79a0cd1e0a?auto=format&fit=crop&w=800&q=80" alt="TKJ">
-        <h3>Teknik Komputer & Jaringan</h3>
-        <p>Mempelajari jaringan komputer, server, dan teknologi informasi.</p>
+        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=60" alt="Pramuka">
+        <div class="card-content">
+          <h3>Pramuka</h3>
+          <p>Kegiatan rutin yang membentuk jiwa mandiri, disiplin, dan tanggung jawab siswa.</p>
+        </div>
       </div>
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1607082349566-187342376b51?auto=format&fit=crop&w=800&q=80" alt="RPL">
-        <h3>Rekayasa Perangkat Lunak</h3>
-        <p>Belajar membuat aplikasi, website, dan sistem informasi modern.</p>
+        <img src="https://images.unsplash.com/photo-1559027615-5ee87cb0c6cf?auto=format&fit=crop&w=800&q=60" alt="Lomba">
+        <div class="card-content">
+          <h3>Lomba Sains</h3>
+          <p>Siswa kami sering menjuarai lomba sains di tingkat kota hingga nasional.</p>
+        </div>
       </div>
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1581093588401-22d91cb3c86e?auto=format&fit=crop&w=800&q=80" alt="Multimedia">
-        <h3>Multimedia</h3>
-        <p>Kembangkan kreativitas melalui desain grafis, video, dan animasi.</p>
+        <img src="https://images.unsplash.com/photo-1580983561371-7b8dba75a9f8?auto=format&fit=crop&w=800&q=60" alt="Pentas Seni">
+        <div class="card-content">
+          <h3>Pentas Seni</h3>
+          <p>Ajang tahunan menampilkan kreativitas siswa di bidang musik, tari, dan drama.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- KONTAK -->
-  <section id="kontak" class="container">
-    <h2 class="section-title">Kontak Kami</h2>
-    <p style="text-align:center;">
-      📍 Alamat: Jl. Pendidikan No. 12, Jakarta<br>
-      ☎️ Telepon: (021) 888 999<br>
-      ✉️ Email: info@smkmalahayati.sch.id
-    </p>
+  <section id="guru">
+    <h2>Daftar Guru</h2>
+    <ul>
+      <li>Bapak Hendra Saputra, S.Pd – Kepala Sekolah</li>
+      <li>Ibu Rani Kusuma, S.Pd – Guru Bahasa Indonesia</li>
+      <li>Bapak Doni Pratama, S.Pd – Guru Matematika</li>
+      <li>Ibu Nita Anggraini, S.Pd – Guru IPA</li>
+      <li>Bapak Suryadi, S.Pd – Guru Penjas</li>
+    </ul>
   </section>
 
-  <!-- FOOTER -->
+  <section id="prestasi">
+    <h2>Prestasi Siswa</h2>
+    <div class="card-container">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1607962837359-3e3c7b4d7a1c?auto=format&fit=crop&w=800&q=60" alt="Juara 1 Sains">
+        <div class="card-content">
+          <h3>Juara 1 Olimpiade Sains</h3>
+          <p>Siswa SMPN 217 berhasil meraih Juara 1 tingkat provinsi dalam Olimpiade Sains Nasional.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=60" alt="Lomba Pidato">
+        <div class="card-content">
+          <h3>Juara 2 Lomba Pidato</h3>
+          <p>Salah satu siswa kami memenangkan lomba pidato Bahasa Indonesia tingkat kota.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontak">
+    <h2>Kontak Kami</h2>
+    <p>Alamat: Jl. Pendidikan No. 217, Jakarta Timur</p>
+    <p>Email: smpn217@sekolah.sch.id | Telepon: (021) 9876543</p>
+  </section>
+
   <footer>
-    <p>&copy; 2025 SMK Islam Malahayati | All Rights Reserved</p>
+    <p>© 2025 SMP Negeri 217 Jakarta. Semua Hak Dilindungi.</p>
   </footer>
 
 </body>
-</html>
+  </html>
