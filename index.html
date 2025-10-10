@@ -65,7 +65,11 @@
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <div>Futuristic Dashboard</div>
   </div>
-  <div id="menu" style="display:none; background:#222; padding:10px;">Menu Content</div>
+  <div id="menu" style="display:none; background:#222; padding:10px;">
+      <a href="#home" style="display:block; padding:5px; color:#0ff;">Home</a>
+      <a href="#profile" style="display:block; padding:5px; color:#0ff;">Profile</a>
+      <a href="#logout" onclick="logout()" style="display:block; padding:5px; color:#f00;">Logout</a>
+    </div>
   <div style="padding:20px;">Welcome to the dashboard!</div>
 </div>
 <script>
@@ -84,6 +88,10 @@
     const menu = document.getElementById('menu');
     menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
   }
+  function logout() {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'flex';
+  }
 </script>
 </body>
-</html>
+      </html>
