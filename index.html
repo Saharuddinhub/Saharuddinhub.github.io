@@ -1,250 +1,89 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SMP Negeri 217</title>
-  <style>
-    /* 🌈 Gaya Umum */
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: #f0f6ff;
-      color: #333;
-    }
-
-    header {
-      background: linear-gradient(135deg, #007bff, #00bfff);
-      color: white;
-      padding: 25px 0;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      letter-spacing: 1px;
-    }
-
-    header p {
-      margin-top: 5px;
-      font-size: 1.1em;
-      font-style: italic;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background: #0056b3;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 15px 25px;
-      display: block;
-      transition: background 0.3s;
-    }
-
-    nav a:hover {
-      background: #007bff;
-    }
-
-    .hero {
-      background: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=60') no-repeat center/cover;
-      color: white;
-      text-align: center;
-      padding: 120px 20px;
-    }
-
-    .hero h2 {
-      font-size: 2.8em;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    }
-
-    .hero p {
-      font-size: 1.3em;
-      max-width: 700px;
-      margin: 0 auto;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-    }
-
-    section {
-      padding: 60px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      color: #0056b3;
-      margin-bottom: 20px;
-      font-size: 2em;
-    }
-
-    .card-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-
-    .card-content {
-      padding: 20px;
-    }
-
-    .card-content h3 {
-      margin-top: 0;
-      color: #004080;
-    }
-
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    ul li {
-      background: #e8f1ff;
-      margin: 8px 0;
-      padding: 12px 15px;
-      border-radius: 10px;
-    }
-
-    footer {
-      background: #004080;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 50px;
-    }
-
-    footer p {
-      margin: 0;
-    }
-
-    @media (max-width: 600px) {
-      .hero h2 {
-        font-size: 2em;
-      }
-      nav a {
-        padding: 10px 15px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futuristic Login</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #0f0f0f, #000000);
+    color: #fff;
+  }
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .login-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffff;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #111;
+    border: 1px solid #00ffff;
+    color: #fff;
+  }
+  button {
+    padding: 10px;
+    width: 100%;
+    background: #00ffff;
+    border: none;
+    cursor: pointer;
+  }
+  #dashboard {
+    display: none;
+  }
+  .navbar {
+    background: #111;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .hamburger {
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-
-  <header>
-    <h1>SMP NEGERI 217</h1>
-    <p>Mengasah Prestasi, Menanamkan Karakter, dan Membangun Masa Depan</p>
-  </header>
-
-  <nav>
-    <a href="#profil">Profil</a>
-    <a href="#kegiatan">Kegiatan</a>
-    <a href="#guru">Guru</a>
-    <a href="#prestasi">Prestasi</a>
-    <a href="#kontak">Kontak</a>
-  </nav>
-
-  <div class="hero">
-    <h2>Selamat Datang di SMP Negeri 217</h2>
-    <p>Tempat belajar yang nyaman, kreatif, dan berkarakter unggul menuju generasi emas Indonesia.</p>
+<div class="login-container" id="loginForm">
+  <div class="login-box">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
   </div>
-
-  <section id="profil">
-    <h2>Profil Sekolah</h2>
-    <p>SMP Negeri 217 berdiri sejak tahun 2000 dengan visi menjadi sekolah unggul dalam prestasi dan karakter.
-       Kami berkomitmen memberikan pendidikan terbaik yang berlandaskan nilai-nilai kejujuran, disiplin, dan tanggung jawab.</p>
-  </section>
-
-  <section id="kegiatan">
-    <h2>Kegiatan Sekolah</h2>
-    <div class="card-container">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=60" alt="Pramuka">
-        <div class="card-content">
-          <h3>Pramuka</h3>
-          <p>Kegiatan rutin yang membentuk jiwa mandiri, disiplin, dan tanggung jawab siswa.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1559027615-5ee87cb0c6cf?auto=format&fit=crop&w=800&q=60" alt="Lomba">
-        <div class="card-content">
-          <h3>Lomba Sains</h3>
-          <p>Siswa kami sering menjuarai lomba sains di tingkat kota hingga nasional.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1580983561371-7b8dba75a9f8?auto=format&fit=crop&w=800&q=60" alt="Pentas Seni">
-        <div class="card-content">
-          <h3>Pentas Seni</h3>
-          <p>Ajang tahunan menampilkan kreativitas siswa di bidang musik, tari, dan drama.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="guru">
-    <h2>Daftar Guru</h2>
-    <ul>
-      <li>Bapak Hendra Saputra, S.Pd – Kepala Sekolah</li>
-      <li>Ibu Rani Kusuma, S.Pd – Guru Bahasa Indonesia</li>
-      <li>Bapak Doni Pratama, S.Pd – Guru Matematika</li>
-      <li>Ibu Nita Anggraini, S.Pd – Guru IPA</li>
-      <li>Bapak Suryadi, S.Pd – Guru Penjas</li>
-    </ul>
-  </section>
-
-  <section id="prestasi">
-    <h2>Prestasi Siswa</h2>
-    <div class="card-container">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1607962837359-3e3c7b4d7a1c?auto=format&fit=crop&w=800&q=60" alt="Juara 1 Sains">
-        <div class="card-content">
-          <h3>Juara 1 Olimpiade Sains</h3>
-          <p>Siswa SMPN 217 berhasil meraih Juara 1 tingkat provinsi dalam Olimpiade Sains Nasional.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=60" alt="Lomba Pidato">
-        <div class="card-content">
-          <h3>Juara 2 Lomba Pidato</h3>
-          <p>Salah satu siswa kami memenangkan lomba pidato Bahasa Indonesia tingkat kota.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="kontak">
-    <h2>Kontak Kami</h2>
-    <p>Alamat: Jl. Pendidikan No. 217, Jakarta Timur</p>
-    <p>Email: smpn217@sekolah.sch.id | Telepon: (021) 9876543</p>
-  </section>
-
-  <footer>
-    <p>© 2025 SMP Negeri 217 Jakarta. Semua Hak Dilindungi.</p>
-  </footer>
-
+</div>
+<div id="dashboard">
+  <div class="navbar">
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div>Futuristic Dashboard</div>
+  </div>
+  <div id="menu" style="display:none; background:#222; padding:10px;">Menu Content</div>
+  <div style="padding:20px;">Welcome to the dashboard!</div>
+</div>
+<script>
+  const validUser = { username: 'admin', password: '1234' };
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    if (user === validUser.username && pass === validUser.password) {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+    } else {
+      alert('Invalid credentials');
+    }
+  }
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 </body>
-  </html>
+</html>
