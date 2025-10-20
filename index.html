@@ -1,101 +1,185 @@
-<!DOCTYPE html><html lang="en">
+<<!DOCTYPE html>
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Futuristic Login</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle, #0f0f0f, #000000);
-    color: #fff;
-  }
-  .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .login-box {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00ffff;
-  }
-  input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    background: #111;
-    border: 1px solid #00ffff;
-    color: #fff;
-  }
-  button {
-    padding: 10px;
-    width: 100%;
-    background: #00ffff;
-    border: none;
-    cursor: pointer;
-  }
-  #dashboard {
-    display: none;
-  }
-  .navbar {
-    background: #111;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .hamburger {
-    cursor: pointer;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Absen Kehadiran Guru & Murid</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 700px;
+      padding: 30px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 20px;
+      margin: 0 5px;
+      background-color: #f0f0f0;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .tab.active {
+      background-color: #4facfe;
+      color: white;
+      box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4facfe;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    button {
+      background-color: #4facfe;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #00c3ff;
+    }
+  </style>
 </head>
 <body>
-<div class="login-container" id="loginForm">
-  <div class="login-box">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </div>
-</div>
-<div id="dashboard">
-  <div class="navbar">
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <div>Futuristic Dashboard</div>
-  </div>
-  <div id="menu" style="display:none; background:#222; padding:10px;">
-      <a href="#home" style="display:block; padding:5px; color:#0ff;">Home</a>
-      <a href="#profile" style="display:block; padding:5px; color:#0ff;">Profile</a>
-      <a href="#logout" onclick="logout()" style="display:block; padding:5px; color:#f00;">Logout</a>
+
+  <div class="container">
+    <h1>Absen Kehadiran</h1>
+
+    <div class="tabs">
+      <div class="tab active" id="guruTab" onclick="showTable('guru')">Guru</div>
+      <div class="tab" id="muridTab" onclick="showTable('murid')">Murid</div>
     </div>
-  <div style="padding:20px; text-align:center;">
-      <h1 style="color:#0ff; text-shadow:0 0 10px #0ff;">Welcome to the Future Dashboard</h1>
-      <img src="https://i.ibb.co/7y0YJ4v/futuristic-tech.jpg" alt="Futuristic Tech" style="width:60%; border:2px solid #0ff; border-radius:10px;">
-      <p style="margin-top:15px; color:#0ff;">Experience advanced technology interface.</p>
+
+    <div id="guruTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama Guru</th>
+            <th>Status Kehadiran</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bu Sari</td>
+            <td id="guru1">Belum Hadir</td>
+            <td><button onclick="absen('guru1')">Absen</button></td>
+          </tr>
+          <tr>
+            <td>Pak Budi</td>
+            <td id="guru2">Belum Hadir</td>
+            <td><button onclick="absen('guru2')">Absen</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</div>
-<script>
-  const validUser = { username: 'admin', password: '1234' };
-  function login() {
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
-    if (user === validUser.username && pass === validUser.password) {
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-    } else {
-      alert('Invalid credentials');
+
+    <div id="muridTable" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama Murid</th>
+            <th>Status Kehadiran</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Andi</td>
+            <td id="murid1">Belum Hadir</td>
+            <td><button onclick="absen('murid1')">Absen</button></td>
+          </tr>
+          <tr>
+            <td>Siti</td>
+            <td id="murid2">Belum Hadir</td>
+            <td><button onclick="absen('murid2')">Absen</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function showTable(type) {
+      const guruTable = document.getElementById('guruTable');
+      const muridTable = document.getElementById('muridTable');
+      const guruTab = document.getElementById('guruTab');
+      const muridTab = document.getElementById('muridTab');
+
+      if (type === 'guru') {
+        guruTable.style.display = 'block';
+        muridTable.style.display = 'none';
+        guruTab.classList.add('active');
+        muridTab.classList.remove('active');
+      } else {
+        guruTable.style.display = 'none';
+        muridTable.style.display = 'block';
+        muridTab.classList.add('active');
+        guruTab.classList.remove('active');
+      }
     }
-  }
-  function toggleMenu() {
-    const menu = document.getElementById('menu');
-    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-  }
-  function logout() {
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('loginForm').style.display = 'flex';
-  }
-</script>
+
+    function absen(id) {
+      const cell = document.getElementById(id);
+      cell.textContent = "Hadir ✅";
+      cell.style.color = "green";
+    }
+  </script>
+
 </body>
 </html>
+
