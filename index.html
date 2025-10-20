@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tangkap Emoji!</title>
+    <title>Tangkap Emoji Ekstrem!</title>
     <!-- Memuat Tailwind CSS dari CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -11,13 +11,13 @@
         /* Menggunakan font Inter dan memastikan tampilan rapi */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0fdf4; /* Light green background */
+            background-color: #fef2f2; /* Light red/pink background for "extreme" */
         }
         /* Style untuk Lubang Game */
         .hole {
             width: 100%;
             height: 100%;
-            background-color: #a7f3d0; /* Emerald 300 */
+            background-color: #fecaca; /* Red 300 */
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -33,7 +33,7 @@
         }
         /* Styling untuk tombol utama */
         .game-button {
-            padding: 1rem 2rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 9999px;
             font-weight: bold;
             text-transform: uppercase;
@@ -41,7 +41,7 @@
             transition: transform 0.1s, box-shadow 0.1s;
         }
         .game-button:hover {
-            box-shadow: 0 10px 15px rgba(4, 120, 87, 0.3), 0 4px 6px rgba(4, 120, 87, 0.2);
+            box-shadow: 0 10px 15px rgba(252, 165, 165, 0.5), 0 4px 6px rgba(252, 165, 165, 0.3);
         }
         .game-button:active {
             transform: translateY(2px);
@@ -52,45 +52,52 @@
 <body class="flex items-center justify-center min-h-screen p-4">
 
     <!-- Kontainer Utama Game -->
-    <div id="game-container" class="w-full max-w-lg bg-white p-6 md:p-8 rounded-xl shadow-2xl border-b-4 border-green-600">
+    <div id="game-container" class="w-full max-w-lg bg-white p-6 md:p-8 rounded-xl shadow-2xl border-b-4 border-red-600">
 
         <!-- Judul Game yang Akan Berubah Sesuai Target Emoji -->
-        <h1 id="gameTitle" class="text-3xl md:text-4xl font-extrabold text-center mb-6 text-green-800">Tangkap Katak! 🐸</h1>
+        <h1 id="gameTitle" class="text-3xl md:text-4xl font-extrabold text-center mb-6 text-red-800">
+            Tangkap Piala 🏆 (Ekstrem)
+        </h1>
+
+        <!-- Info Hukuman -->
+        <div class="text-center text-sm mb-4 text-red-700 font-semibold">
+            <p>Klik Kosong: +1s | Klik 💣: -5 Poin & +3s</p>
+        </div>
 
         <!-- Scoreboard dan Timer -->
-        <div class="flex justify-between items-center bg-green-100 p-4 rounded-lg shadow-inner mb-6">
+        <div class="flex justify-between items-center bg-red-100 p-4 rounded-lg shadow-inner mb-6">
             <div class="text-center">
-                <p class="text-sm uppercase font-semibold text-green-700">Skor (Target: 30)</p>
-                <p id="score" class="text-3xl font-bold text-green-900">0</p>
+                <p class="text-sm uppercase font-semibold text-red-700">Skor (Target: 50)</p>
+                <p id="score" class="text-3xl font-bold text-red-900">0</p>
             </div>
             <div class="text-center">
-                <p class="text-sm uppercase font-semibold text-green-700">Waktu (detik)</p>
-                <p id="timer" class="text-3xl font-bold text-green-900">0.0</p>
+                <p class="text-sm uppercase font-semibold text-red-700">Waktu (detik)</p>
+                <p id="timer" class="text-3xl font-bold text-red-900">0.00</p>
             </div>
         </div>
 
         <!-- Area Game Board (3x3 Grid) -->
-        <div id="game-board" class="grid grid-cols-3 gap-3 md:gap-4 w-full aspect-square bg-green-50 p-4 rounded-xl shadow-lg border border-green-300">
+        <div id="game-board" class="grid grid-cols-3 gap-3 md:gap-4 w-full aspect-square bg-red-50 p-4 rounded-xl shadow-lg border border-red-300">
             <!-- Lubang-lubang akan dibuat secara dinamis oleh JavaScript -->
         </div>
 
         <!-- Kontrol Game -->
         <div class="mt-8 flex justify-center">
-            <button id="startButton" class="game-button bg-green-500 text-white hover:bg-green-600">
-                Mulai Balapan
+            <button id="startButton" class="game-button bg-red-500 text-white hover:bg-red-600">
+                Mulai Neraka Kecepatan!
             </button>
         </div>
 
         <!-- Kotak Pesan Game Over (Modal) -->
         <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
             <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-lg w-full">
-                <h2 id="messageTitle" class="text-3xl font-bold text-green-700 mb-4">FINISH! Waktu Terbaik Anda!</h2>
+                <h2 id="messageTitle" class="text-3xl font-bold text-red-700 mb-4">FINISH! Waktu Terbaik Anda!</h2>
                 <p id="messageBody" class="text-lg text-gray-700 mb-6">Skor akhir Anda: 0</p>
                 
                 <!-- Area LLM Response 1: Ulasan -->
                 <div id="summaryArea" class="mt-4 p-4 border border-gray-200 rounded-lg hidden">
                     <p id="summaryText" class="text-gray-800 italic"></p>
-                    <p id="summaryLoading" class="text-green-500 font-semibold hidden">Meminta Ulasan dari Gemini...</p>
+                    <p id="summaryLoading" class="text-red-500 font-semibold hidden">Meminta Analisis dari Gemini...</p>
                 </div>
 
                 <!-- Tombol Gemini API 1 (Summary) -->
@@ -100,15 +107,15 @@
 
                 <!-- Area LLM Response 2: Saran Emoji -->
                 <div class="mt-4 pt-4 border-t border-gray-200">
-                     <p id="newEmojiStatus" class="text-xs text-gray-500 mt-2 hidden">Target Baru: <span id="newEmojiDisplay" class="text-xl"></span> (<span id="newThemeDisplay"></span>)</p>
-                     <p id="emojiLoading" class="text-pink-500 font-semibold hidden">Meminta Saran Emoji dari Gemini...</p>
+                     <p id="newEmojiStatus" class="text-xs text-gray-500 mt-2 hidden">Target & Distraktor Baru: <span id="newEmojiDisplay" class="text-xl"></span> (Tema: <span id="newThemeDisplay"></span>)</p>
+                     <p id="emojiLoading" class="text-pink-500 font-semibold hidden">Meminta Saran Target dan Distraktor dari Gemini...</p>
                     <button id="suggestEmojiButton" class="game-button bg-pink-500 text-white hover:bg-pink-600 text-sm mt-4 hidden">
-                        Saran Target Baru ✨
+                        Set Tantangan Baru ✨
                     </button>
                 </div>
 
                 <!-- Tombol Main Lagi -->
-                <button id="restartButton" class="game-button bg-green-500 text-white hover:bg-green-600 mt-4">
+                <button id="restartButton" class="game-button bg-red-500 text-white hover:bg-red-600 mt-4">
                     Balapan Lagi!
                 </button>
             </div>
@@ -122,15 +129,23 @@
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
         const MAX_RETRIES = 5;
 
-        // --- KONFIGURASI GAME (MODE BALAPAN) ---
-        const TARGET_SCORE = 30; // Target skor untuk menyelesaikan balapan
+        // --- KONFIGURASI GAME (MODE BALAPAN EKSTREM) ---
+        const TARGET_SCORE = 50; 
+        
         // Variabel global
-        let EMOJI_TARGET = '🐸';
-        let EMOJI_TARGET_NAME = 'Katak';
+        let EMOJI_TARGET = '🏆'; 
+        let EMOJI_TARGET_NAME = 'Piala';
+        let EMOJI_DISTRACTOR = '💣'; 
+        let EMOJI_DISTRACTOR_NAME = 'Bom';
         const EMOJI_EMPTY = '✨';
 
+        // Penalty Configuration (in milliseconds)
+        const PENALTY_EMPTY_CLICK = 1000; // +1 detik jika klik lubang kosong
+        const PENALTY_DISTRACTOR_CLICK = 3000; // +3 detik jika klik distraktor
+        const PENALTY_DISTRACTOR_SCORE = 5; // -5 skor jika klik distraktor
+
         let score = 0;
-        let timeInMilliseconds = 0; // Waktu diukur dalam milidetik
+        let timeInMilliseconds = 0; 
         let isGameRunning = false;
         let lastHoleIndex = -1;
 
@@ -170,7 +185,8 @@
          * Mengatur judul game sesuai dengan target emoji saat ini.
          */
         function updateGameTitle() {
-            gameTitle.innerHTML = `Tangkap ${EMOJI_TARGET_NAME}! ${EMOJI_TARGET}`;
+            gameTitle.innerHTML = `Tangkap ${EMOJI_TARGET_NAME} ${EMOJI_TARGET} (Hindari ${EMOJI_DISTRACTOR}) - Ekstrem`;
+            newEmojiDisplay.innerHTML = `${EMOJI_TARGET} & ${EMOJI_DISTRACTOR}`;
         }
         
         /**
@@ -183,6 +199,7 @@
                 hole.classList.add('hole', 'flex', 'items-center', 'justify-center');
                 hole.dataset.index = i;
                 hole.innerHTML = EMOJI_EMPTY;
+                hole.dataset.type = 'empty';
                 hole.addEventListener('click', handleClick);
                 gameBoard.appendChild(hole);
             }
@@ -214,31 +231,39 @@
         }
 
         /**
-         * Menampilkan emoji target di lubang acak selama durasi tertentu.
+         * Menampilkan emoji target atau distraktor di lubang acak.
          */
         function showEmoji() {
-            // Hapus emoji target dari semua lubang (menggantinya dengan EMOJI_EMPTY)
+            // Reset semua lubang ke EMOJI_EMPTY
             Array.from(gameBoard.children).forEach(hole => {
                 hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.isTarget = 'false';
-                hole.classList.remove('bg-red-400'); // Hapus feedback visual sebelumnya
+                hole.dataset.type = 'empty';
             });
 
-            // Pilih lubang baru untuk target
             const hole = getRandomHole();
+            
+            // 80% Target, 20% Distraktor
+            const isTarget = Math.random() < 0.8; 
+            
+            if (isTarget) {
+                hole.innerHTML = EMOJI_TARGET;
+                hole.dataset.type = 'target';
+            } else {
+                hole.innerHTML = EMOJI_DISTRACTOR;
+                hole.dataset.type = 'distractor';
+            }
 
-            // Tampilkan emoji target
-            hole.innerHTML = EMOJI_TARGET;
-            hole.dataset.isTarget = 'true';
-
-            // Atur waktu agar emoji menghilang jika tidak diklik
-            const timeToHide = Math.max(800, 1500 - (score * 10)); // Waktu muncul semakin cepat seiring skor naik
+            // Atur waktu agar emoji menghilang. Kecepatan meningkat seiring skor
+            const minTime = 300;
+            const maxTime = 700;
+            const speedFactor = Math.min(1, score / 40); // Cap speed at score 40
+            const timeToHide = maxTime - (speedFactor * (maxTime - minTime)); 
 
             setTimeout(() => {
-                if (hole.dataset.isTarget === 'true') {
+                if (hole.dataset.type !== 'empty') {
                     // Jika emoji masih ada (belum diklik), hapus
                     hole.innerHTML = EMOJI_EMPTY;
-                    hole.dataset.isTarget = 'false';
+                    hole.dataset.type = 'empty';
                 }
             }, timeToHide);
         }
@@ -251,31 +276,42 @@
             if (!isGameRunning) return;
 
             const hole = event.currentTarget;
+            const clickedType = hole.dataset.type;
 
-            // Cek apakah yang diklik adalah emoji target
-            if (hole.dataset.isTarget === 'true') {
+            if (clickedType === 'target') {
+                // KASUS 1: Klik Target yang Benar (+1 Skor)
                 score++;
-                scoreElement.textContent = score;
-
-                // Feedback visual sukses
                 hole.innerHTML = '✅';
                 hole.classList.add('bg-green-400', 'ring-4', 'ring-green-300');
+                hole.dataset.type = 'empty';
                 
-                // Reset status target
-                hole.dataset.isTarget = 'false';
+            } else if (clickedType === 'distractor') {
+                // KASUS 2: Klik Distraktor (-5 Skor, +3 Detik)
+                score = Math.max(0, score - PENALTY_DISTRACTOR_SCORE); // Skor tidak boleh minus
+                timeInMilliseconds += PENALTY_DISTRACTOR_CLICK;
                 
-                // Hapus feedback visual setelah jeda singkat
-                setTimeout(() => {
-                    hole.innerHTML = EMOJI_EMPTY;
-                    hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300');
-                }, 100); 
+                hole.innerHTML = '❌';
+                hole.classList.add('bg-red-700', 'text-white', 'ring-4', 'ring-red-500');
+                hole.dataset.type = 'empty';
                 
-                // Cek kondisi kemenangan (Race Mode)
-                if (score >= TARGET_SCORE) {
-                    endGame(false); 
-                }
+            } else if (clickedType === 'empty') {
+                // KASUS 3: Klik Lubang Kosong (+1 Detik)
+                timeInMilliseconds += PENALTY_EMPTY_CLICK;
+                hole.classList.add('bg-yellow-400', 'ring-4', 'ring-yellow-300'); // Feedback kuning untuk kesalahan
+            }
+            
+            scoreElement.textContent = score;
 
-            } // Gagal klik tidak perlu feedback, karena fokus ke kecepatan.
+            // Reset visual feedback setelah jeda singkat
+            setTimeout(() => {
+                hole.innerHTML = EMOJI_EMPTY;
+                hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300', 'bg-red-700', 'text-white', 'ring-red-500', 'bg-yellow-400', 'ring-yellow-300');
+            }, 100); 
+            
+            // Cek kondisi kemenangan (Race Mode)
+            if (score >= TARGET_SCORE) {
+                endGame(false); 
+            }
         }
 
         /**
@@ -311,13 +347,12 @@
             suggestEmojiButton.classList.add('hidden');
             summaryArea.classList.add('hidden');
             summaryText.textContent = '';
-            newEmojiStatus.classList.add('hidden');
             
             // Reset semua lubang
             Array.from(gameBoard.children).forEach(hole => {
                 hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.isTarget = 'false';
-                hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300');
+                hole.dataset.type = 'empty';
+                hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300', 'bg-red-700', 'text-white', 'ring-red-500', 'bg-yellow-400', 'ring-yellow-300');
             });
 
             // Start Timer (count up every 10ms for precision)
@@ -327,8 +362,7 @@
             }, 10);
 
             // Start Mole Appearance
-            const initialSpeed = 1000;
-            moleInterval = setInterval(showEmoji, initialSpeed);
+            moleInterval = setInterval(showEmoji, 800); // Mulai cukup cepat
         }
 
         /**
@@ -344,11 +378,11 @@
 
             // Tampilkan pesan Game Over/FINISH
             if (forced) {
-                messageTitle.textContent = 'Balapan Dihentikan!';
-                messageBody.textContent = `Skor terakhir Anda: ${score} dari ${TARGET_SCORE}.`;
+                messageTitle.textContent = 'Balapan Dihentikan Paksa!';
+                messageBody.textContent = `Skor terakhir Anda: ${score} dari ${TARGET_SCORE}. Lanjut lagi?`;
             } else {
                 messageTitle.textContent = 'FINISH! Waktu Terbaik Anda!';
-                messageBody.textContent = `Anda berhasil menangkap ${TARGET_SCORE} target dalam waktu ${finalTime} detik!`;
+                messageBody.textContent = `Anda berhasil mencapai ${TARGET_SCORE} target dalam waktu ${finalTime} detik!`;
             }
             
             messageBox.classList.remove('hidden');
@@ -361,13 +395,12 @@
 
             // Reset tombol
             startButton.disabled = false;
-            startButton.textContent = 'Mulai Balapan';
+            startButton.textContent = 'Mulai Neraka Kecepatan!';
             
             // Hapus emoji yang tersisa
             Array.from(gameBoard.children).forEach(hole => {
                 hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.isTarget = 'false';
-                hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300');
+                hole.dataset.type = 'empty';
             });
         }
         
@@ -377,11 +410,11 @@
         async function generateSummary() {
             const finalTime = formatTime(timeInMilliseconds);
 
-            const userQuery = `Saya baru saja menyelesaikan game Tangkap Emoji (Race Mode) dengan target ${TARGET_SCORE} target. Saya mencapai skor tersebut dalam waktu ${finalTime} detik.
-                               Analisis kecepatan dan performa saya secara singkat (maksimal 3 kalimat). Jika waktu di bawah 25 detik, sebutkan itu luar biasa.
+            const userQuery = `Saya baru saja menyelesaikan game Tangkap Emoji (Mode Neraka Kecepatan) dengan target ${TARGET_SCORE} target. Saya mencapai skor tersebut dalam waktu ${finalTime} detik. Game ini memiliki hukuman waktu yang brutal jika saya salah klik.
+                               Analisis kecepatan dan akurasi saya secara singkat (maksimal 4 kalimat). Jika waktu di bawah 45 detik, sebutkan itu SANGAT LUAR BIASA mengingat kesulitan brutalnya.
                                Berikan komentar yang lucu, memotivasi, atau mendramatisir hasil ini. Gunakan bahasa Indonesia formal dan kasual yang bercampur.`;
 
-            const systemPrompt = "Anda adalah komentator game AI yang cerdas dan jenaka. Tugas Anda adalah menganalisis waktu tempuh pemain dalam mode balapan dan memberikan ulasan performa yang menghibur, memotivasi, dan ringkas (maksimal 3 kalimat). Fokus pada kecepatan dan target skor.";
+            const systemPrompt = "Anda adalah komentator game AI yang cerdas dan jenaka. Tugas Anda adalah menganalisis waktu tempuh pemain dalam mode balapan ekstrim dengan hukuman berat. Berikan ulasan performa yang menghibur, memotivasi, dan ringkas (maksimal 4 kalimat). Fokus pada kecepatan, akurasi, dan kesulitan game.";
             
             summaryArea.classList.remove('hidden');
             summaryText.textContent = '';
@@ -426,18 +459,19 @@
         }
 
          /**
-         * Meminta Gemini untuk menyarankan emoji target baru dan tema (Feature 2).
+         * Meminta Gemini untuk menyarankan emoji target dan distraktor baru (Feature 2).
          */
         async function suggestNewEmoji() {
-            const userQuery = "Sediakan satu emoji Unicode yang menarik dan namanya dalam Bahasa Indonesia untuk dijadikan target dalam permainan Tangkap Emoji. Tema haruslah sesuatu yang menyenangkan atau aneh.";
+            const userQuery = "Sediakan satu karakter emoji Unicode untuk target utama dan satu karakter emoji Unicode berbeda untuk distraktor. Berikan juga nama tema lucu dalam Bahasa Indonesia untuk set ini. Pastikan distraktor terlihat mengancam atau mengganggu.";
             
             const structuredSchema = {
                 type: "OBJECT",
                 properties: {
-                    "emoji_character": { "type": "STRING", "description": "Satu karakter emoji unicode." },
-                    "emoji_name_id": { "type": "STRING", "description": "Nama pendek atau deskripsi lucu emoji dalam Bahasa Indonesia." }
+                    "target_char": { "type": "STRING", "description": "Satu karakter emoji unicode untuk target utama." },
+                    "distractor_char": { "type": "STRING", "description": "Satu karakter emoji unicode untuk distraktor (berbeda dari target)." },
+                    "theme_name_id": { "type": "STRING", "description": "Nama tema yang lucu atau unik dalam Bahasa Indonesia, e.g., 'Perang Makanan'." }
                 },
-                required: ["emoji_character", "emoji_name_id"]
+                required: ["target_char", "distractor_char", "theme_name_id"]
             };
 
             const payload = {
@@ -446,7 +480,7 @@
                     responseMimeType: "application/json",
                     responseSchema: structuredSchema
                 },
-                systemInstruction: { parts: [{ text: "Anda adalah pembuat tema game yang kreatif. Tugas Anda adalah memberikan satu karakter emoji dan nama tema lucu dalam format JSON yang spesifik. Pastikan Anda hanya membalas dengan JSON, dan jangan gunakan karakter emoji yang sama dengan target default (🐸)." }] },
+                systemInstruction: { parts: [{ text: "Anda adalah pembuat tantangan game ekstrim yang kreatif. Tugas Anda adalah memberikan satu karakter emoji target, satu karakter emoji distraktor, dan nama tema lucu dalam format JSON yang spesifik. Pastikan Anda hanya membalas dengan JSON." }] },
             };
 
             newEmojiStatus.classList.add('hidden');
@@ -472,13 +506,15 @@
                         const parsedJson = JSON.parse(jsonText);
                         
                         // Update global state and UI
-                        EMOJI_TARGET = parsedJson.emoji_character || EMOJI_TARGET; // Fallback just in case
-                        EMOJI_TARGET_NAME = parsedJson.emoji_name_id || EMOJI_TARGET_NAME;
+                        EMOJI_TARGET = parsedJson.target_char || EMOJI_TARGET; 
+                        EMOJI_DISTRACTOR = parsedJson.distractor_char || EMOJI_DISTRACTOR;
+                        EMOJI_TARGET_NAME = parsedJson.theme_name_id.split(' ')[0] || EMOJI_TARGET_NAME; // Gunakan bagian pertama nama tema sebagai nama target
+                        EMOJI_DISTRACTOR_NAME = parsedJson.theme_name_id.split(' ')[1] || EMOJI_DISTRACTOR_NAME;
                         
                         // Update title and status display
                         updateGameTitle(); // Panggil fungsi untuk update H1
-                        newEmojiDisplay.textContent = EMOJI_TARGET;
-                        newThemeDisplay.textContent = EMOJI_TARGET_NAME;
+                        newEmojiDisplay.textContent = `${EMOJI_TARGET} & ${EMOJI_DISTRACTOR}`;
+                        newThemeDisplay.textContent = parsedJson.theme_name_id;
                         
                         newEmojiStatus.classList.remove('hidden');
                         
@@ -491,8 +527,8 @@
                     if (i === MAX_RETRIES - 1) {
                         newEmojiStatus.classList.remove('hidden');
                         newEmojiStatus.textContent = "Gagal menyarankan target baru. Menggunakan target lama.";
-                        newEmojiDisplay.textContent = EMOJI_TARGET;
-                        newThemeDisplay.textContent = EMOJI_TARGET_NAME;
+                        newEmojiDisplay.textContent = `${EMOJI_TARGET} & ${EMOJI_DISTRACTOR}`;
+                        newThemeDisplay.textContent = "Default";
                     }
                     const delay = Math.pow(2, i) * 1000;
                     await new Promise(resolve => setTimeout(resolve, delay));
@@ -501,11 +537,9 @@
             
             emojiLoading.classList.add('hidden');
             suggestEmojiButton.disabled = false;
-            suggestEmojiButton.textContent = 'Ganti Target Lagi ✨'; // Change button text after successful run
+            suggestEmojiButton.textContent = 'Set Tantangan Baru Lagi ✨'; // Change button text after successful run
         }
 
     </script>
 </body>
 </html>
-
-
