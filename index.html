@@ -1,272 +1,176 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reaksi Cepat - Tantangan Berwaktu</title>
-    <!-- Memuat Tailwind CSS untuk styling modern dan responsif -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Menggunakan font Inter dan memastikan latar belakang gelap untuk kontras */
-        :root {
-            font-family: 'Inter', sans-serif;
-        }
-        .game-tile {
-            aspect-ratio: 1 / 1; /* Membuat petak selalu berbentuk persegi */
-            transition: background-color 0.2s ease, transform 0.1s;
-            cursor: pointer;
-            user-select: none;
-            box-shadow: 0 4px #1f2937; /* Shadow untuk efek tombol */
-        }
-        .game-tile:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px #1f2937;
-        }
-        .target-flash {
-            background-color: #f1c40f !important; /* Kuning terang untuk target */
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'game-bg': '#1f2937',
-                        'primary-accent': '#3498db',
-                        'danger-red': '#e74c3c',
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SMK Islam Malahayati</title>
+  <style>
+    /* === RESET & BODY === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* === HEADER & NAVBAR === */
+    header {
+      background: #1a1a1a;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid #00f7ff;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00f7ff;
+    }
+
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-menu a {
+      color: #ffffff;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover {
+      color: #00f7ff;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger .line {
+      width: 25px;
+      height: 3px;
+      background: #ffffff;
+    }
+
+    /* === RESPONSIVE NAV === */
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #1a1a1a;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu ul {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #000000, #0f1c2e);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #c0c0c0;
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #333;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-2xl">
-        <h1 class="text-3xl font-extrabold text-center mb-4 text-primary-accent">REAKSI CEPAT</h1>
-        <p class="text-center text-gray-600 mb-6">Klik petak yang berkedip secepat mungkin dalam batas waktu!</p>
-
-        <!-- Area Status Permainan -->
-        <div class="flex justify-between items-center mb-6 p-4 bg-gray-100 rounded-lg shadow-inner">
-            <div class="text-xl font-bold text-gray-800">
-                Waktu: <span id="timerDisplay" class="text-danger-red font-extrabold">0s</span>
-            </div>
-            <div class="text-xl font-bold text-gray-800">
-                Level: <span id="levelDisplay" class="text-primary-accent font-extrabold">1</span>
-            </div>
-        </div>
-
-        <!-- Grid Permainan -->
-        <div id="gameGrid" class="grid grid-cols-3 gap-3 bg-game-bg p-3 rounded-lg border-4 border-primary-accent shadow-lg">
-            <!-- Tiles akan di-generate di sini oleh JavaScript -->
-        </div>
-
-        <!-- Modal (Layar Mulai/Game Over) -->
-        <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
-            <div class="bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm transform transition-all scale-100">
-                <h2 id="modalTitle" class="text-3xl font-bold mb-4 text-primary-accent">Mulai Permainan</h2>
-                <p id="modalMessage" class="text-xl text-gray-700 mb-6">Klik tombol di bawah untuk memulai tantangan!</p>
-                <div class="bg-gray-100 p-3 rounded-lg mb-6">
-                    Skor Tertinggi: <span id="highScoreDisplay" class="font-extrabold text-danger-red">0</span>
-                </div>
-                <button id="startButton" class="w-full py-3 bg-primary-accent text-white font-bold rounded-lg hover:bg-blue-700 transition duration-200 shadow-md">
-                    MULAI TANTANGAN
-                </button>
-            </div>
-        </div>
+  <header>
+    <div class="logo">SMK ISLAM MALAHAYATI</div>
+    <nav id="nav-menu" class="nav-menu">
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Profil</a></li>
+        <li><a href="#">Jurusan</a></li>
+        <li><a href="#">Berita</a></li>
+        <li><a href="#">Kontak</a></li>
+      </ul>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
     </div>
+  </header>
 
-    <script>
-        // DOM Elements
-        const gameGrid = document.getElementById('gameGrid');
-        const timerDisplay = document.getElementById('timerDisplay');
-        const levelDisplay = document.getElementById('levelDisplay');
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalMessage = document.getElementById('modalMessage');
-        const startButton = document.getElementById('startButton');
-        const highScoreDisplay = document.getElementById('highScoreDisplay');
+  <main>
+    <section class="hero">
+      <h1>Selamat Datang di SMK Islam Malahayati</h1>
+      <p>Menjadi Sekolah Menengah Kejuruan Unggulan Berbasis Teknologi dan Keislaman</p>
+    </section>
+  </main>
 
-        // Game State Variables
-        const NUM_TILES = 9;
-        let gameState = {
-            isRunning: false,
-            currentLevel: 1,
-            score: 0,
-            timeLeft: 5, // Waktu awal per level
-            timerInterval: null,
-            targetTileIndex: -1,
-            flashDuration: 500, // Durasi kedip (ms)
-            highScore: localStorage.getItem('quickClickHighScore') ? parseInt(localStorage.getItem('quickClickHighScore')) : 0
-        };
+  <footer>
+    <p>&copy; 2025 SMK Islam Malahayati. All rights reserved.</p>
+  </footer>
 
-        // --- Firebase/Firestore (Placeholder for multiplayer/persistence) ---
-        // Karena ini game single player sederhana, kita hanya menggunakan localStorage
-        
-        // --- Game Setup and Initialization ---
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
 
-        function generateTiles() {
-            gameGrid.innerHTML = '';
-            for (let i = 0; i < NUM_TILES; i++) {
-                const tile = document.createElement('div');
-                tile.classList.add('game-tile', 'bg-gray-700', 'rounded-lg', 'flex', 'items-center', 'justify-center', 'text-white', 'text-2xl', 'font-bold');
-                tile.dataset.index = i;
-                tile.addEventListener('click', () => handleTileClick(i));
-                gameGrid.appendChild(tile);
-            }
-        }
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
 
-        function initGame() {
-            gameState.isRunning = true;
-            gameState.currentLevel = 1;
-            gameState.score = 0;
-            gameState.timeLeft = 5;
-            
-            // Update UI Initial
-            levelDisplay.textContent = gameState.currentLevel;
-            timerDisplay.textContent = `${gameState.timeLeft.toFixed(1)}s`;
-            
-            modal.classList.add('hidden');
-            
-            generateTiles();
-            startGameTimer();
-            startLevel();
-        }
-
-        // --- Game Logic ---
-
-        function startGameTimer() {
-            // Hapus timer lama jika ada
-            if (gameState.timerInterval) {
-                clearInterval(gameState.timerInterval);
-            }
-
-            gameState.timerInterval = setInterval(() => {
-                if (!gameState.isRunning) {
-                    clearInterval(gameState.timerInterval);
-                    return;
-                }
-
-                gameState.timeLeft -= 0.1;
-                timerDisplay.textContent = `${gameState.timeLeft.toFixed(1)}s`;
-
-                if (gameState.timeLeft <= 0) {
-                    clearInterval(gameState.timerInterval);
-                    gameOver(false); // Waktu habis
-                }
-            }, 100); // Update setiap 100ms
-        }
-        
-        function startLevel() {
-            // Reset flash duration based on level (faster flash as level increases)
-            gameState.flashDuration = Math.max(200, 500 - (gameState.currentLevel - 1) * 20);
-            
-            // Pilih petak target secara acak
-            let newTarget;
-            do {
-                newTarget = Math.floor(Math.random() * NUM_TILES);
-            } while (newTarget === gameState.targetTileIndex); // Pastikan target berbeda dari sebelumnya
-            
-            gameState.targetTileIndex = newTarget;
-
-            // Flash the tile
-            flashTile(gameState.targetTileIndex);
-        }
-        
-        function flashTile(index) {
-            const tiles = gameGrid.children;
-            const targetTile = tiles[index];
-            
-            // Tampilkan kedipan (flash)
-            targetTile.classList.add('target-flash');
-            
-            // Hilangkan kedipan setelah durasi tertentu
-            setTimeout(() => {
-                targetTile.classList.remove('target-flash');
-            }, gameState.flashDuration);
-        }
-
-        function handleTileClick(clickedIndex) {
-            if (!gameState.isRunning || gameState.targetTileIndex === -1) {
-                return; // Abaikan klik jika game tidak berjalan atau target belum diatur
-            }
-
-            if (clickedIndex === gameState.targetTileIndex) {
-                // Klik Benar: Maju ke level berikutnya
-                
-                // Beri umpan balik visual cepat
-                gameGrid.children[clickedIndex].classList.add('bg-green-500');
-                setTimeout(() => {
-                    gameGrid.children[clickedIndex].classList.remove('bg-green-500');
-                }, 100);
-
-                // Logika Level Up: Tambah waktu, tingkatkan level, mulai level baru
-                gameState.timeLeft += 2; // Tambah 2 detik sebagai bonus
-                gameState.currentLevel++;
-                
-                // Atur ulang target agar tidak bisa diklik lagi
-                gameState.targetTileIndex = -1; 
-                
-                // Update UI
-                levelDisplay.textContent = gameState.currentLevel;
-
-                startLevel();
-
-            } else {
-                // Klik Salah: Game Over
-                gameOver(true); 
-            }
-        }
-
-        function gameOver(clickedWrong) {
-            gameState.isRunning = false;
-            clearInterval(gameState.timerInterval);
-            
-            // Hitung skor akhir
-            gameState.score = gameState.currentLevel;
-            
-            // Update High Score
-            if (gameState.score > gameState.highScore) {
-                gameState.highScore = gameState.score;
-                localStorage.setItem('quickClickHighScore', gameState.highScore);
-            }
-            
-            // Tampilkan Modal
-            modal.classList.remove('hidden');
-            highScoreDisplay.textContent = gameState.highScore;
-            startButton.textContent = "MAIN LAGI";
-
-            if (clickedWrong) {
-                modalTitle.textContent = "KLIK SALAH!";
-                modalTitle.classList.remove('text-primary-accent');
-                modalTitle.classList.add('text-danger-red');
-                modalMessage.innerHTML = `Anda mencapai Level **${gameState.score}** sebelum melakukan kesalahan. Coba lagi!`;
-            } else {
-                modalTitle.textContent = "WAKTU HABIS!";
-                modalTitle.classList.remove('text-primary-accent');
-                modalTitle.classList.add('text-danger-red');
-                modalMessage.innerHTML = `Anda mencapai Level **${gameState.score}**. Anda kehabisan waktu. Coba lagi!`;
-            }
-            
-            // Beri umpan balik visual Game Over (petak target merah)
-            if (gameState.targetTileIndex !== -1) {
-                gameGrid.children[gameState.targetTileIndex].classList.add('bg-danger-red');
-            }
-        }
-
-        // --- Event Listeners ---
-        startButton.addEventListener('click', () => {
-            modalTitle.classList.remove('text-danger-red');
-            modalTitle.classList.add('text-primary-accent');
-            initGame();
-        });
-
-        // Inisialisasi tampilan awal
-        window.onload = function() {
-            generateTiles();
-            highScoreDisplay.textContent = gameState.highScore;
-        };
-
-    </script>
 </body>
 </html>
