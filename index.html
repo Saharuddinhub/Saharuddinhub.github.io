@@ -3,542 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tangkap Emoji Ekstrem!</title>
-    <!-- Memuat Tailwind CSS dari CDN -->
+    <title>Reaksi Cepat - Tantangan Berwaktu</title>
+    <!-- Memuat Tailwind CSS untuk styling modern dan responsif -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Menggunakan font Inter dan memastikan tampilan rapi */
-        body {
+        /* Menggunakan font Inter dan memastikan latar belakang gelap untuk kontras */
+        :root {
             font-family: 'Inter', sans-serif;
-            background-color: #fef2f2; /* Light red/pink background for "extreme" */
         }
-        /* Style untuk Lubang Game */
-        .hole {
-            width: 100%;
-            height: 100%;
-            background-color: #fecaca; /* Red 300 */
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem; /* Ukuran emoji */
+        .game-tile {
+            aspect-ratio: 1 / 1; /* Membuat petak selalu berbentuk persegi */
+            transition: background-color 0.2s ease, transform 0.1s;
             cursor: pointer;
-            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.05s ease-in-out;
             user-select: none;
+            box-shadow: 0 4px #1f2937; /* Shadow untuk efek tombol */
         }
-        .hole:active {
-            transform: scale(0.95);
-        }
-        /* Styling untuk tombol utama */
-        .game-button {
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        .game-button:hover {
-            box-shadow: 0 10px 15px rgba(252, 165, 165, 0.5), 0 4px 6px rgba(252, 165, 165, 0.3);
-        }
-        .game-button:active {
+        .game-tile:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px #1f2937;
+        }
+        .target-flash {
+            background-color: #f1c40f !important; /* Kuning terang untuk target */
         }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'game-bg': '#1f2937',
+                        'primary-accent': '#3498db',
+                        'danger-red': '#e74c3c',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Kontainer Utama Game -->
-    <div id="game-container" class="w-full max-w-lg bg-white p-6 md:p-8 rounded-xl shadow-2xl border-b-4 border-red-600">
+    <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-2xl">
+        <h1 class="text-3xl font-extrabold text-center mb-4 text-primary-accent">REAKSI CEPAT</h1>
+        <p class="text-center text-gray-600 mb-6">Klik petak yang berkedip secepat mungkin dalam batas waktu!</p>
 
-        <!-- Judul Game yang Akan Berubah Sesuai Target Emoji -->
-        <h1 id="gameTitle" class="text-3xl md:text-4xl font-extrabold text-center mb-6 text-red-800">
-            Tangkap Piala 🏆 (Ekstrem)
-        </h1>
-
-        <!-- Info Hukuman -->
-        <div class="text-center text-sm mb-4 text-red-700 font-semibold">
-            <p>Klik Kosong: +1s | Klik 💣: -5 Poin & +3s</p>
-        </div>
-
-        <!-- Scoreboard dan Timer -->
-        <div class="flex justify-between items-center bg-red-100 p-4 rounded-lg shadow-inner mb-6">
-            <div class="text-center">
-                <p class="text-sm uppercase font-semibold text-red-700">Skor (Target: 50)</p>
-                <p id="score" class="text-3xl font-bold text-red-900">0</p>
+        <!-- Area Status Permainan -->
+        <div class="flex justify-between items-center mb-6 p-4 bg-gray-100 rounded-lg shadow-inner">
+            <div class="text-xl font-bold text-gray-800">
+                Waktu: <span id="timerDisplay" class="text-danger-red font-extrabold">0s</span>
             </div>
-            <div class="text-center">
-                <p class="text-sm uppercase font-semibold text-red-700">Waktu (detik)</p>
-                <p id="timer" class="text-3xl font-bold text-red-900">0.00</p>
+            <div class="text-xl font-bold text-gray-800">
+                Level: <span id="levelDisplay" class="text-primary-accent font-extrabold">1</span>
             </div>
         </div>
 
-        <!-- Area Game Board (3x3 Grid) -->
-        <div id="game-board" class="grid grid-cols-3 gap-3 md:gap-4 w-full aspect-square bg-red-50 p-4 rounded-xl shadow-lg border border-red-300">
-            <!-- Lubang-lubang akan dibuat secara dinamis oleh JavaScript -->
+        <!-- Grid Permainan -->
+        <div id="gameGrid" class="grid grid-cols-3 gap-3 bg-game-bg p-3 rounded-lg border-4 border-primary-accent shadow-lg">
+            <!-- Tiles akan di-generate di sini oleh JavaScript -->
         </div>
 
-        <!-- Kontrol Game -->
-        <div class="mt-8 flex justify-center">
-            <button id="startButton" class="game-button bg-red-500 text-white hover:bg-red-600">
-                Mulai Neraka Kecepatan!
-            </button>
-        </div>
-
-        <!-- Kotak Pesan Game Over (Modal) -->
-        <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
-            <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-lg w-full">
-                <h2 id="messageTitle" class="text-3xl font-bold text-red-700 mb-4">FINISH! Waktu Terbaik Anda!</h2>
-                <p id="messageBody" class="text-lg text-gray-700 mb-6">Skor akhir Anda: 0</p>
-                
-                <!-- Area LLM Response 1: Ulasan -->
-                <div id="summaryArea" class="mt-4 p-4 border border-gray-200 rounded-lg hidden">
-                    <p id="summaryText" class="text-gray-800 italic"></p>
-                    <p id="summaryLoading" class="text-red-500 font-semibold hidden">Meminta Analisis dari Gemini...</p>
+        <!-- Modal (Layar Mulai/Game Over) -->
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+            <div class="bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm transform transition-all scale-100">
+                <h2 id="modalTitle" class="text-3xl font-bold mb-4 text-primary-accent">Mulai Permainan</h2>
+                <p id="modalMessage" class="text-xl text-gray-700 mb-6">Klik tombol di bawah untuk memulai tantangan!</p>
+                <div class="bg-gray-100 p-3 rounded-lg mb-6">
+                    Skor Tertinggi: <span id="highScoreDisplay" class="font-extrabold text-danger-red">0</span>
                 </div>
-
-                <!-- Tombol Gemini API 1 (Summary) -->
-                <button id="geminiButton" class="game-button bg-indigo-500 text-white hover:bg-indigo-600 mt-6 hidden">
-                    Analisis Kecepatan AI ✨
-                </button>
-
-                <!-- Area LLM Response 2: Saran Emoji -->
-                <div class="mt-4 pt-4 border-t border-gray-200">
-                     <p id="newEmojiStatus" class="text-xs text-gray-500 mt-2 hidden">Target & Distraktor Baru: <span id="newEmojiDisplay" class="text-xl"></span> (Tema: <span id="newThemeDisplay"></span>)</p>
-                     <p id="emojiLoading" class="text-pink-500 font-semibold hidden">Meminta Saran Target dan Distraktor dari Gemini...</p>
-                    <button id="suggestEmojiButton" class="game-button bg-pink-500 text-white hover:bg-pink-600 text-sm mt-4 hidden">
-                        Set Tantangan Baru ✨
-                    </button>
-                </div>
-
-                <!-- Tombol Main Lagi -->
-                <button id="restartButton" class="game-button bg-red-500 text-white hover:bg-red-600 mt-4">
-                    Balapan Lagi!
+                <button id="startButton" class="w-full py-3 bg-primary-accent text-white font-bold rounded-lg hover:bg-blue-700 transition duration-200 shadow-md">
+                    MULAI TANTANGAN
                 </button>
             </div>
         </div>
-
     </div>
 
     <script>
-        // --- KONFIGURASI GEMINI API ---
-        const API_KEY = ""; // Kunci API akan disediakan oleh runtime
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
-        const MAX_RETRIES = 5;
-
-        // --- KONFIGURASI GAME (MODE BALAPAN EKSTREM) ---
-        const TARGET_SCORE = 50; 
-        
-        // Variabel global
-        let EMOJI_TARGET = '🏆'; 
-        let EMOJI_TARGET_NAME = 'Piala';
-        let EMOJI_DISTRACTOR = '💣'; 
-        let EMOJI_DISTRACTOR_NAME = 'Bom';
-        const EMOJI_EMPTY = '✨';
-
-        // Penalty Configuration (in milliseconds)
-        const PENALTY_EMPTY_CLICK = 1000; // +1 detik jika klik lubang kosong
-        const PENALTY_DISTRACTOR_CLICK = 3000; // +3 detik jika klik distraktor
-        const PENALTY_DISTRACTOR_SCORE = 5; // -5 skor jika klik distraktor
-
-        let score = 0;
-        let timeInMilliseconds = 0; 
-        let isGameRunning = false;
-        let lastHoleIndex = -1;
-
-        // Interval IDs
-        let moleInterval;
-        let timerInterval;
-
         // DOM Elements
-        const scoreElement = document.getElementById('score');
-        const timerElement = document.getElementById('timer');
-        const gameBoard = document.getElementById('game-board');
+        const gameGrid = document.getElementById('gameGrid');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const levelDisplay = document.getElementById('levelDisplay');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
         const startButton = document.getElementById('startButton');
-        const messageBox = document.getElementById('messageBox');
-        const messageTitle = document.getElementById('messageTitle');
-        const messageBody = document.getElementById('messageBody');
-        const restartButton = document.getElementById('restartButton');
-        
-        // Elemen Gemini 1: Summary
-        const geminiButton = document.getElementById('geminiButton');
-        const summaryArea = document.getElementById('summaryArea');
-        const summaryText = document.getElementById('summaryText');
-        const summaryLoading = document.getElementById('summaryLoading');
-        
-        // Elemen Game Title
-        const gameTitle = document.getElementById('gameTitle');
+        const highScoreDisplay = document.getElementById('highScoreDisplay');
 
-        // Elemen Gemini 2: Emoji Suggestion
-        const suggestEmojiButton = document.getElementById('suggestEmojiButton');
-        const newEmojiStatus = document.getElementById('newEmojiStatus');
-        const newEmojiDisplay = document.getElementById('newEmojiDisplay');
-        const newThemeDisplay = document.getElementById('newThemeDisplay');
-        const emojiLoading = document.getElementById('emojiLoading');
+        // Game State Variables
+        const NUM_TILES = 9;
+        let gameState = {
+            isRunning: false,
+            currentLevel: 1,
+            score: 0,
+            timeLeft: 5, // Waktu awal per level
+            timerInterval: null,
+            targetTileIndex: -1,
+            flashDuration: 500, // Durasi kedip (ms)
+            highScore: localStorage.getItem('quickClickHighScore') ? parseInt(localStorage.getItem('quickClickHighScore')) : 0
+        };
 
-        // --- GAME SETUP AND INITIALIZATION ---
-
-        /**
-         * Mengatur judul game sesuai dengan target emoji saat ini.
-         */
-        function updateGameTitle() {
-            gameTitle.innerHTML = `Tangkap ${EMOJI_TARGET_NAME} ${EMOJI_TARGET} (Hindari ${EMOJI_DISTRACTOR}) - Ekstrem`;
-            newEmojiDisplay.innerHTML = `${EMOJI_TARGET} & ${EMOJI_DISTRACTOR}`;
-        }
+        // --- Firebase/Firestore (Placeholder for multiplayer/persistence) ---
+        // Karena ini game single player sederhana, kita hanya menggunakan localStorage
         
-        /**
-         * Membuat lubang-lubang game di dalam papan.
-         */
-        function createHoles() {
-            gameBoard.innerHTML = ''; // Hapus lubang lama jika ada
-            for (let i = 0; i < 9; i++) {
-                const hole = document.createElement('div');
-                hole.classList.add('hole', 'flex', 'items-center', 'justify-center');
-                hole.dataset.index = i;
-                hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.type = 'empty';
-                hole.addEventListener('click', handleClick);
-                gameBoard.appendChild(hole);
+        // --- Game Setup and Initialization ---
+
+        function generateTiles() {
+            gameGrid.innerHTML = '';
+            for (let i = 0; i < NUM_TILES; i++) {
+                const tile = document.createElement('div');
+                tile.classList.add('game-tile', 'bg-gray-700', 'rounded-lg', 'flex', 'items-center', 'justify-center', 'text-white', 'text-2xl', 'font-bold');
+                tile.dataset.index = i;
+                tile.addEventListener('click', () => handleTileClick(i));
+                gameGrid.appendChild(tile);
             }
         }
 
-        // Jalankan saat pertama kali dimuat
-        createHoles();
-        updateGameTitle();
-        startButton.addEventListener('click', startGame);
-        restartButton.addEventListener('click', startGame);
-        geminiButton.addEventListener('click', generateSummary);
-        suggestEmojiButton.addEventListener('click', suggestNewEmoji);
+        function initGame() {
+            gameState.isRunning = true;
+            gameState.currentLevel = 1;
+            gameState.score = 0;
+            gameState.timeLeft = 5;
+            
+            // Update UI Initial
+            levelDisplay.textContent = gameState.currentLevel;
+            timerDisplay.textContent = `${gameState.timeLeft.toFixed(1)}s`;
+            
+            modal.classList.add('hidden');
+            
+            generateTiles();
+            startGameTimer();
+            startLevel();
+        }
 
+        // --- Game Logic ---
 
-        // --- GAME LOGIC FUNCTIONS ---
+        function startGameTimer() {
+            // Hapus timer lama jika ada
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+            }
 
-        /**
-         * Mengambil lubang acak yang berbeda dari lubang sebelumnya.
-         * @returns {HTMLElement} Elemen lubang yang dipilih.
-         */
-        function getRandomHole() {
-            const holes = gameBoard.children;
-            let index;
+            gameState.timerInterval = setInterval(() => {
+                if (!gameState.isRunning) {
+                    clearInterval(gameState.timerInterval);
+                    return;
+                }
+
+                gameState.timeLeft -= 0.1;
+                timerDisplay.textContent = `${gameState.timeLeft.toFixed(1)}s`;
+
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timerInterval);
+                    gameOver(false); // Waktu habis
+                }
+            }, 100); // Update setiap 100ms
+        }
+        
+        function startLevel() {
+            // Reset flash duration based on level (faster flash as level increases)
+            gameState.flashDuration = Math.max(200, 500 - (gameState.currentLevel - 1) * 20);
+            
+            // Pilih petak target secara acak
+            let newTarget;
             do {
-                index = Math.floor(Math.random() * holes.length);
-            } while (index === lastHoleIndex); // Pastikan tidak sama dengan lubang sebelumnya
-            lastHoleIndex = index;
-            return holes[index];
-        }
-
-        /**
-         * Menampilkan emoji target atau distraktor di lubang acak.
-         */
-        function showEmoji() {
-            // Reset semua lubang ke EMOJI_EMPTY
-            Array.from(gameBoard.children).forEach(hole => {
-                hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.type = 'empty';
-            });
-
-            const hole = getRandomHole();
+                newTarget = Math.floor(Math.random() * NUM_TILES);
+            } while (newTarget === gameState.targetTileIndex); // Pastikan target berbeda dari sebelumnya
             
-            // 80% Target, 20% Distraktor
-            const isTarget = Math.random() < 0.8; 
-            
-            if (isTarget) {
-                hole.innerHTML = EMOJI_TARGET;
-                hole.dataset.type = 'target';
-            } else {
-                hole.innerHTML = EMOJI_DISTRACTOR;
-                hole.dataset.type = 'distractor';
-            }
+            gameState.targetTileIndex = newTarget;
 
-            // Atur waktu agar emoji menghilang. Kecepatan meningkat seiring skor
-            const minTime = 300;
-            const maxTime = 700;
-            const speedFactor = Math.min(1, score / 40); // Cap speed at score 40
-            const timeToHide = maxTime - (speedFactor * (maxTime - minTime)); 
-
-            setTimeout(() => {
-                if (hole.dataset.type !== 'empty') {
-                    // Jika emoji masih ada (belum diklik), hapus
-                    hole.innerHTML = EMOJI_EMPTY;
-                    hole.dataset.type = 'empty';
-                }
-            }, timeToHide);
-        }
-
-        /**
-         * Menghandle klik pada lubang.
-         * @param {Event} event - Event klik
-         */
-        function handleClick(event) {
-            if (!isGameRunning) return;
-
-            const hole = event.currentTarget;
-            const clickedType = hole.dataset.type;
-
-            if (clickedType === 'target') {
-                // KASUS 1: Klik Target yang Benar (+1 Skor)
-                score++;
-                hole.innerHTML = '✅';
-                hole.classList.add('bg-green-400', 'ring-4', 'ring-green-300');
-                hole.dataset.type = 'empty';
-                
-            } else if (clickedType === 'distractor') {
-                // KASUS 2: Klik Distraktor (-5 Skor, +3 Detik)
-                score = Math.max(0, score - PENALTY_DISTRACTOR_SCORE); // Skor tidak boleh minus
-                timeInMilliseconds += PENALTY_DISTRACTOR_CLICK;
-                
-                hole.innerHTML = '❌';
-                hole.classList.add('bg-red-700', 'text-white', 'ring-4', 'ring-red-500');
-                hole.dataset.type = 'empty';
-                
-            } else if (clickedType === 'empty') {
-                // KASUS 3: Klik Lubang Kosong (+1 Detik)
-                timeInMilliseconds += PENALTY_EMPTY_CLICK;
-                hole.classList.add('bg-yellow-400', 'ring-4', 'ring-yellow-300'); // Feedback kuning untuk kesalahan
-            }
-            
-            scoreElement.textContent = score;
-
-            // Reset visual feedback setelah jeda singkat
-            setTimeout(() => {
-                hole.innerHTML = EMOJI_EMPTY;
-                hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300', 'bg-red-700', 'text-white', 'ring-red-500', 'bg-yellow-400', 'ring-yellow-300');
-            }, 100); 
-            
-            // Cek kondisi kemenangan (Race Mode)
-            if (score >= TARGET_SCORE) {
-                endGame(false); 
-            }
-        }
-
-        /**
-         * Memformat waktu dari milidetik ke detik dengan 2 desimal.
-         * @param {number} ms - Waktu dalam milidetik.
-         * @returns {string} Waktu dalam format X.XX detik.
-         */
-        function formatTime(ms) {
-            return (ms / 1000).toFixed(2);
-        }
-
-        /**
-         * Memulai Game (Mode Balapan).
-         */
-        function startGame() {
-            if (isGameRunning) {
-                endGame(true); // Stop game jika sudah berjalan
-            }
-
-            // Reset state
-            score = 0;
-            timeInMilliseconds = 0;
-            isGameRunning = true;
-            scoreElement.textContent = score;
-            timerElement.textContent = formatTime(timeInMilliseconds);
-            messageBox.classList.add('hidden');
-            messageBox.classList.remove('flex');
-            startButton.disabled = true;
-            startButton.textContent = 'Balapan Berjalan...';
-
-            // Sembunyikan dan reset area Gemini
-            geminiButton.classList.add('hidden');
-            suggestEmojiButton.classList.add('hidden');
-            summaryArea.classList.add('hidden');
-            summaryText.textContent = '';
-            
-            // Reset semua lubang
-            Array.from(gameBoard.children).forEach(hole => {
-                hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.type = 'empty';
-                hole.classList.remove('bg-green-400', 'ring-4', 'ring-green-300', 'bg-red-700', 'text-white', 'ring-red-500', 'bg-yellow-400', 'ring-yellow-300');
-            });
-
-            // Start Timer (count up every 10ms for precision)
-            timerInterval = setInterval(() => {
-                timeInMilliseconds += 10;
-                timerElement.textContent = formatTime(timeInMilliseconds);
-            }, 10);
-
-            // Start Mole Appearance
-            moleInterval = setInterval(showEmoji, 800); // Mulai cukup cepat
-        }
-
-        /**
-         * Mengakhiri Game.
-         * @param {boolean} forced - Apakah game dihentikan secara paksa (bukan karena skor tercapai).
-         */
-        function endGame(forced) {
-            isGameRunning = false;
-            clearInterval(moleInterval);
-            clearInterval(timerInterval);
-            
-            const finalTime = formatTime(timeInMilliseconds);
-
-            // Tampilkan pesan Game Over/FINISH
-            if (forced) {
-                messageTitle.textContent = 'Balapan Dihentikan Paksa!';
-                messageBody.textContent = `Skor terakhir Anda: ${score} dari ${TARGET_SCORE}. Lanjut lagi?`;
-            } else {
-                messageTitle.textContent = 'FINISH! Waktu Terbaik Anda!';
-                messageBody.textContent = `Anda berhasil mencapai ${TARGET_SCORE} target dalam waktu ${finalTime} detik!`;
-            }
-            
-            messageBox.classList.remove('hidden');
-            messageBox.classList.add('flex');
-            
-            // Tampilkan tombol Gemini
-            geminiButton.classList.remove('hidden');
-            suggestEmojiButton.classList.remove('hidden');
-
-
-            // Reset tombol
-            startButton.disabled = false;
-            startButton.textContent = 'Mulai Neraka Kecepatan!';
-            
-            // Hapus emoji yang tersisa
-            Array.from(gameBoard.children).forEach(hole => {
-                hole.innerHTML = EMOJI_EMPTY;
-                hole.dataset.type = 'empty';
-            });
+            // Flash the tile
+            flashTile(gameState.targetTileIndex);
         }
         
-        /**
-         * Meminta Gemini untuk membuat ulasan berdasarkan skor permainan (Feature 1).
-         */
-        async function generateSummary() {
-            const finalTime = formatTime(timeInMilliseconds);
-
-            const userQuery = `Saya baru saja menyelesaikan game Tangkap Emoji (Mode Neraka Kecepatan) dengan target ${TARGET_SCORE} target. Saya mencapai skor tersebut dalam waktu ${finalTime} detik. Game ini memiliki hukuman waktu yang brutal jika saya salah klik.
-                               Analisis kecepatan dan akurasi saya secara singkat (maksimal 4 kalimat). Jika waktu di bawah 45 detik, sebutkan itu SANGAT LUAR BIASA mengingat kesulitan brutalnya.
-                               Berikan komentar yang lucu, memotivasi, atau mendramatisir hasil ini. Gunakan bahasa Indonesia formal dan kasual yang bercampur.`;
-
-            const systemPrompt = "Anda adalah komentator game AI yang cerdas dan jenaka. Tugas Anda adalah menganalisis waktu tempuh pemain dalam mode balapan ekstrim dengan hukuman berat. Berikan ulasan performa yang menghibur, memotivasi, dan ringkas (maksimal 4 kalimat). Fokus pada kecepatan, akurasi, dan kesulitan game.";
+        function flashTile(index) {
+            const tiles = gameGrid.children;
+            const targetTile = tiles[index];
             
-            summaryArea.classList.remove('hidden');
-            summaryText.textContent = '';
-            summaryLoading.classList.remove('hidden');
-            geminiButton.disabled = true;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
-
-            for (let i = 0; i < MAX_RETRIES; i++) {
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, Gemini gagal memberikan ulasan. Coba lagi!";
-                    
-                    summaryText.textContent = text;
-                    break; // Berhasil, keluar dari loop
-                } catch (error) {
-                    console.error("Gemini API call failed:", error);
-                    if (i === MAX_RETRIES - 1) {
-                        summaryText.textContent = "Gagal mendapatkan ulasan setelah beberapa kali percobaan. Mungkin jaringan sedang sibuk!";
-                    }
-                    // Implementasi exponential backoff
-                    const delay = Math.pow(2, i) * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
+            // Tampilkan kedipan (flash)
+            targetTile.classList.add('target-flash');
             
-            summaryLoading.classList.add('hidden');
-            geminiButton.disabled = false;
+            // Hilangkan kedipan setelah durasi tertentu
+            setTimeout(() => {
+                targetTile.classList.remove('target-flash');
+            }, gameState.flashDuration);
         }
 
-         /**
-         * Meminta Gemini untuk menyarankan emoji target dan distraktor baru (Feature 2).
-         */
-        async function suggestNewEmoji() {
-            const userQuery = "Sediakan satu karakter emoji Unicode untuk target utama dan satu karakter emoji Unicode berbeda untuk distraktor. Berikan juga nama tema lucu dalam Bahasa Indonesia untuk set ini. Pastikan distraktor terlihat mengancam atau mengganggu.";
+        function handleTileClick(clickedIndex) {
+            if (!gameState.isRunning || gameState.targetTileIndex === -1) {
+                return; // Abaikan klik jika game tidak berjalan atau target belum diatur
+            }
+
+            if (clickedIndex === gameState.targetTileIndex) {
+                // Klik Benar: Maju ke level berikutnya
+                
+                // Beri umpan balik visual cepat
+                gameGrid.children[clickedIndex].classList.add('bg-green-500');
+                setTimeout(() => {
+                    gameGrid.children[clickedIndex].classList.remove('bg-green-500');
+                }, 100);
+
+                // Logika Level Up: Tambah waktu, tingkatkan level, mulai level baru
+                gameState.timeLeft += 2; // Tambah 2 detik sebagai bonus
+                gameState.currentLevel++;
+                
+                // Atur ulang target agar tidak bisa diklik lagi
+                gameState.targetTileIndex = -1; 
+                
+                // Update UI
+                levelDisplay.textContent = gameState.currentLevel;
+
+                startLevel();
+
+            } else {
+                // Klik Salah: Game Over
+                gameOver(true); 
+            }
+        }
+
+        function gameOver(clickedWrong) {
+            gameState.isRunning = false;
+            clearInterval(gameState.timerInterval);
             
-            const structuredSchema = {
-                type: "OBJECT",
-                properties: {
-                    "target_char": { "type": "STRING", "description": "Satu karakter emoji unicode untuk target utama." },
-                    "distractor_char": { "type": "STRING", "description": "Satu karakter emoji unicode untuk distraktor (berbeda dari target)." },
-                    "theme_name_id": { "type": "STRING", "description": "Nama tema yang lucu atau unik dalam Bahasa Indonesia, e.g., 'Perang Makanan'." }
-                },
-                required: ["target_char", "distractor_char", "theme_name_id"]
-            };
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: structuredSchema
-                },
-                systemInstruction: { parts: [{ text: "Anda adalah pembuat tantangan game ekstrim yang kreatif. Tugas Anda adalah memberikan satu karakter emoji target, satu karakter emoji distraktor, dan nama tema lucu dalam format JSON yang spesifik. Pastikan Anda hanya membalas dengan JSON." }] },
-            };
-
-            newEmojiStatus.classList.add('hidden');
-            emojiLoading.classList.remove('hidden');
-            suggestEmojiButton.disabled = true;
-
-            for (let i = 0; i < MAX_RETRIES; i++) {
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    
-                    if (jsonText) {
-                        const parsedJson = JSON.parse(jsonText);
-                        
-                        // Update global state and UI
-                        EMOJI_TARGET = parsedJson.target_char || EMOJI_TARGET; 
-                        EMOJI_DISTRACTOR = parsedJson.distractor_char || EMOJI_DISTRACTOR;
-                        EMOJI_TARGET_NAME = parsedJson.theme_name_id.split(' ')[0] || EMOJI_TARGET_NAME; // Gunakan bagian pertama nama tema sebagai nama target
-                        EMOJI_DISTRACTOR_NAME = parsedJson.theme_name_id.split(' ')[1] || EMOJI_DISTRACTOR_NAME;
-                        
-                        // Update title and status display
-                        updateGameTitle(); // Panggil fungsi untuk update H1
-                        newEmojiDisplay.textContent = `${EMOJI_TARGET} & ${EMOJI_DISTRACTOR}`;
-                        newThemeDisplay.textContent = parsedJson.theme_name_id;
-                        
-                        newEmojiStatus.classList.remove('hidden');
-                        
-                        break; 
-                    } else {
-                         throw new Error("Invalid response structure or missing JSON text.");
-                    }
-                } catch (error) {
-                    console.error("Gemini Structured API call failed:", error);
-                    if (i === MAX_RETRIES - 1) {
-                        newEmojiStatus.classList.remove('hidden');
-                        newEmojiStatus.textContent = "Gagal menyarankan target baru. Menggunakan target lama.";
-                        newEmojiDisplay.textContent = `${EMOJI_TARGET} & ${EMOJI_DISTRACTOR}`;
-                        newThemeDisplay.textContent = "Default";
-                    }
-                    const delay = Math.pow(2, i) * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
+            // Hitung skor akhir
+            gameState.score = gameState.currentLevel;
+            
+            // Update High Score
+            if (gameState.score > gameState.highScore) {
+                gameState.highScore = gameState.score;
+                localStorage.setItem('quickClickHighScore', gameState.highScore);
             }
             
-            emojiLoading.classList.add('hidden');
-            suggestEmojiButton.disabled = false;
-            suggestEmojiButton.textContent = 'Set Tantangan Baru Lagi ✨'; // Change button text after successful run
+            // Tampilkan Modal
+            modal.classList.remove('hidden');
+            highScoreDisplay.textContent = gameState.highScore;
+            startButton.textContent = "MAIN LAGI";
+
+            if (clickedWrong) {
+                modalTitle.textContent = "KLIK SALAH!";
+                modalTitle.classList.remove('text-primary-accent');
+                modalTitle.classList.add('text-danger-red');
+                modalMessage.innerHTML = `Anda mencapai Level **${gameState.score}** sebelum melakukan kesalahan. Coba lagi!`;
+            } else {
+                modalTitle.textContent = "WAKTU HABIS!";
+                modalTitle.classList.remove('text-primary-accent');
+                modalTitle.classList.add('text-danger-red');
+                modalMessage.innerHTML = `Anda mencapai Level **${gameState.score}**. Anda kehabisan waktu. Coba lagi!`;
+            }
+            
+            // Beri umpan balik visual Game Over (petak target merah)
+            if (gameState.targetTileIndex !== -1) {
+                gameGrid.children[gameState.targetTileIndex].classList.add('bg-danger-red');
+            }
         }
+
+        // --- Event Listeners ---
+        startButton.addEventListener('click', () => {
+            modalTitle.classList.remove('text-danger-red');
+            modalTitle.classList.add('text-primary-accent');
+            initGame();
+        });
+
+        // Inisialisasi tampilan awal
+        window.onload = function() {
+            generateTiles();
+            highScoreDisplay.textContent = gameState.highScore;
+        };
 
     </script>
 </body>
