@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CyberSchool - Sekolah Teknologi Masa Depan</title>
+  <title>Malahayati Islami School</title>
   <style>
-    /* ==== STYLE DASAR ==== */
+    /* === STYLE DASAR === */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0a0a0a, #030014);
+      background: radial-gradient(circle at top, #050519, #000);
       color: #fff;
       overflow-x: hidden;
     }
@@ -19,20 +19,22 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 60px;
-      background: rgba(0, 0, 20, 0.7);
+      background: rgba(0, 0, 20, 0.6);
       backdrop-filter: blur(10px);
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 20px rgba(0,230,255,0.2);
     }
 
     .logo {
-      font-size: 1.5em;
+      font-size: 1.6em;
       font-weight: bold;
       color: #00e6ff;
       letter-spacing: 2px;
+      text-shadow: 0 0 15px #00e6ff;
     }
 
     nav ul {
@@ -53,7 +55,7 @@
       text-shadow: 0 0 10px #00e6ff;
     }
 
-    /* ==== HERO SECTION ==== */
+    /* === HERO SECTION === */
     .hero {
       height: 100vh;
       display: flex;
@@ -61,27 +63,38 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background: linear-gradient(to bottom, rgba(0,0,30,0.8), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80');
+      background: linear-gradient(to bottom, rgba(0,0,30,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80');
       background-size: cover;
       background-position: center;
+      perspective: 800px;
+      animation: floatBg 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatBg {
+      0% { background-position: center; }
+      100% { background-position: top; }
     }
 
     .hero h1 {
-      font-size: 3em;
+      font-size: 3.2em;
       letter-spacing: 3px;
-      animation: glow 2s infinite alternate;
+      color: #00e6ff;
+      text-shadow: 0 0 30px #00e6ff;
+      transform: rotateX(10deg);
+      animation: titleGlow 3s infinite alternate;
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00e6ff; }
-      to { text-shadow: 0 0 30px #00e6ff; }
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px #00e6ff; transform: rotateX(10deg); }
+      100% { text-shadow: 0 0 60px #00e6ff; transform: rotateX(-10deg); }
     }
 
     .hero p {
-      font-size: 1.3em;
+      font-size: 1.2em;
       color: #aaa;
       max-width: 600px;
       margin-top: 15px;
+      text-shadow: 0 0 10px #00e6ff50;
     }
 
     .menu {
@@ -98,20 +111,83 @@
       border-radius: 15px;
       padding: 25px 40px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: 0.4s;
       backdrop-filter: blur(8px);
       font-weight: 500;
       font-size: 1.1em;
+      transform: rotateY(0deg);
     }
 
     .menu-item:hover {
-      background: rgba(0, 230, 255, 0.1);
+      background: rgba(0, 230, 255, 0.15);
       border-color: #00e6ff;
-      box-shadow: 0 0 15px #00e6ff;
-      transform: scale(1.05);
+      box-shadow: 0 0 20px #00e6ff;
+      transform: scale(1.1) rotateY(10deg);
     }
 
-    /* ==== FOOTER ==== */
+    /* === LOGIN MODAL === */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 20, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: rgba(0, 0, 30, 0.9);
+      border: 1px solid #00e6ff;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 0 40px #00e6ff;
+      animation: popUp 0.6s ease;
+    }
+
+    @keyframes popUp {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal input {
+      display: block;
+      margin: 15px auto;
+      padding: 10px;
+      width: 80%;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 1em;
+    }
+
+    .btn {
+      background: #00e6ff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00b5cc;
+      box-shadow: 0 0 20px #00e6ff;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: #fff;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
     footer {
       text-align: center;
       padding: 30px;
@@ -123,8 +199,10 @@
   </style>
 </head>
 <body>
+
+  <!-- HEADER -->
   <header>
-    <div class="logo">CYBERSCHOOL</div>
+    <div class="logo">Malahayati Islami School</div>
     <nav>
       <ul>
         <li><a href="#">Beranda</a></li>
@@ -136,19 +214,65 @@
     </nav>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
-    <h1>Selamat Datang di CyberSchool</h1>
-    <p>Tempat di mana pendidikan bertemu teknologi masa depan. Bergabunglah dan jadilah generasi digital yang siap menghadapi dunia.</p>
+    <h1>Selamat Datang di Malahayati Islami School</h1>
+    <p>Sekolah berbasis teknologi dan nilai islami untuk membentuk generasi masa depan yang cerdas, beriman, dan berdaya saing global.</p>
+
     <div class="menu">
-      <div class="menu-item" onclick="alert('Masuk ke halaman Siswa!')">Masuk sebagai Siswa</div>
-      <div class="menu-item" onclick="alert('Masuk ke halaman Guru!')">Masuk sebagai Guru</div>
-      <div class="menu-item" onclick="alert('Masuk ke halaman Tamu!')">Masuk sebagai Tamu</div>
-      <div class="menu-item" onclick="alert('Lihat Informasi Sekolah!')">Lihat Info Sekolah</div>
+      <div class="menu-item" onclick="openLogin('siswa')">Login Siswa</div>
+      <div class="menu-item" onclick="openLogin('guru')">Login Guru</div>
+      <div class="menu-item" onclick="openLogin('tamu')">Login Tamu</div>
     </div>
   </section>
 
+  <!-- LOGIN MODAL -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLogin()">&times;</span>
+      <h2 id="loginTitle">Login</h2>
+      <input type="text" id="username" placeholder="Nama Pengguna" />
+      <input type="password" id="password" placeholder="Kata Sandi" />
+      <button class="btn" onclick="submitLogin()">Masuk</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
-    &copy; 2025 CyberSchool. Semua Hak Dilindungi.
+    &copy; 2025 Malahayati Islami School | Powered by FutureTech Design
   </footer>
+
+  <!-- AUDIO EFEK -->
+  <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_054ff938e7.mp3?filename=digital-click-112788.mp3"></audio>
+
+  <script>
+    const modal = document.getElementById('loginModal');
+    const loginTitle = document.getElementById('loginTitle');
+    const clickSound = document.getElementById('clickSound');
+
+    function openLogin(type) {
+      clickSound.play();
+      modal.style.display = 'flex';
+      if (type === 'siswa') loginTitle.innerText = 'Login Siswa';
+      else if (type === 'guru') loginTitle.innerText = 'Login Guru';
+      else loginTitle.innerText = 'Login Tamu';
+    }
+
+    function closeLogin() {
+      clickSound.play();
+      modal.style.display = 'none';
+    }
+
+    function submitLogin() {
+      clickSound.play();
+      alert('Login berhasil! (simulasi)');
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(e) {
+      if (e.target == modal) modal.style.display = 'none';
+    }
+  </script>
+
 </body>
 </html>
